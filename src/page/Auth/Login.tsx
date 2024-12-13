@@ -104,7 +104,7 @@ const LoginPage = () => {
                                     />
                                 </Col>
                             </Row>
-                            <button onKeyPress={onLogin} className='w-full cursor-pointer' onClick={onLogin}>Đăng nhập</button>
+                            <div onKeyPress={onLogin} className='w-full cursor-pointer button' onClick={onLogin}>Đăng nhập</div>
                         </div>
                     </div>
                     <div className="overlay-container">

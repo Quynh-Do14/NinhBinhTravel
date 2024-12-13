@@ -91,13 +91,14 @@ class BaoCaoService {
         }
     }
 
-    async DeleteBaoCao(id: string, setLoading: Function) {
+    async DeleteBaoCao(id: string, setLoading: Function, onBack: Function) {
         setLoading(true)
         try {
             return await RequestService
                 .post(`${Endpoint.BaoCao.Delete}/${id}`,)
                 .then(response => {
                     if (response) {
+                        onBack()
                         SuccessMessage("Xóa thành công", "")
                         return response
                     }

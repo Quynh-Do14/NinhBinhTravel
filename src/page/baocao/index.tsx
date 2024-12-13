@@ -94,13 +94,12 @@ const ListBaoCaoManagement = () => {
         try {
             await baoCaoService.DeleteBaoCao(
                 idSelected,
-                setLoading
-            ).then((res) => {
-                if (res) {
+                setLoading,
+                () => {
                     setIsDeleteModal(false);
                     onSearch().then(() => { });
                 }
-            })
+            ).then((res) => { })
         }
         catch (error) {
             console.error(error)

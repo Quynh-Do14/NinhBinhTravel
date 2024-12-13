@@ -12,8 +12,10 @@ class AuthService {
                 })
                 .then(response => {
                     if (response) {
-                        const userData: any = response.data.token
-                        localStorage.setItem('token', JSON.stringify(userData))
+                        const userData: any = response.data.user;
+                        const token: any = response.data.token;
+                        localStorage.setItem('token', JSON.stringify(token))
+                        localStorage.setItem('userData', JSON.stringify(userData))
                     }
                     setLoading(false)
                     SuccessMessage("Đăng nhập thành công", "")
@@ -33,7 +35,7 @@ class AuthService {
                 .get(Endpoint.Auth.Logout)
                 .then(response => {
                     localStorage.removeItem("token");
-                    
+
                     setLoading(false)
                     SuccessMessage("Đăng nhập thành công", "")
                     return response;

@@ -5,8 +5,8 @@
 	flex-direction: column;
 	font-family: 'Montserrat', sans-serif;
 	height: 100vh;
-	background: -webkit-linear-gradient(to left, #c8f7ef00, #1c3f66a9);
-	background: linear-gradient(to left, #c8f7ef00, #1c3f66a9);
+	background: -webkit-linear-gradient(to left, #c8f7ef00, #4181caa9);
+	background: linear-gradient(to left, #c8f7ef00, #4181caa9);
 }
 
 .login h1 {
@@ -37,7 +37,7 @@
 	margin: 15px 0;
 }
 
-.login button {
+.login .button {
 	border-radius: 20px;
 	border: 1px solid #1C3E66;
 	background-color: #1C3E66;
@@ -85,7 +85,7 @@
 	width: 768px;
 	max-width: 100%;
 	min-height: 480px;
-	/* background-image: url("../../images//bg.jpg"); */
+	background-image: url("../../images/bg.jpg");
 	background-repeat: no-repeat;
 	background-size: cover;
 }
@@ -152,8 +152,8 @@
 }
 
 .login .overlay {
-	background: -webkit-linear-gradient(to right, #c8f7ef00, #1c3f66a9);
-	background: linear-gradient(to right, #c8f7ef00, #1c3f66a9);
+	background: -webkit-linear-gradient(to right, #c8f7ef00, #4181caa9);
+	background: linear-gradient(to right, #c8f7ef00, #4181caa9);
 	/* background-image: url("../../images/bg.jpg"); */
 	background-repeat: no-repeat;
 	background-size: cover;

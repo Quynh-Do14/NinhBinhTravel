@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import '../../../assets/styles/page/MainLayout.css';
 import BreadcrumbCommon from '../components/controls/Breadcumb';
-import { Dropdown, Menu, Space } from 'antd';
+import { Col, Dropdown, Menu, Row, Space } from 'antd';
 import DialogConfirmCommon from '../components/modal/dialogConfirm';
 import authService from '../../repositories/auth/service/auth.service';
 import { useNavigate } from 'react-router-dom';
@@ -57,6 +57,8 @@ const HeaderAdminComponent = (props: Props) => {
             </Menu>
         )
     };
+    const username = JSON.parse(String(localStorage.getItem("userData")))?.data?.us;
+
     return (
         <div>
             <div className="header-admin">
@@ -66,16 +68,30 @@ const HeaderAdminComponent = (props: Props) => {
                     redirect={redirect}
                     isAdmin={true}
                 />
-                <Dropdown overlay={listAction} trigger={['click']} className='flex justify-end'>
-                    <a onClick={(e) => e.preventDefault()}>
-                        <Space>
-                            <div className="img">
-                                <img src={avatar} width={30} height={30} alt={''} />
-                            </div>
-                        </Space>
-                    </a>
 
-                </Dropdown>
+
+                <Row align={"middle"} >
+                    <Col className='mr-2 flex flex-col align-bottom'>
+                        <div className='text-[14px] text-[#FFF] font-bold'>
+                            {username}
+                        </div>
+                        {/* <div className='role'>
+                                {dataProfile.roles[0]?.name}
+                            </div> */}
+                    </Col>
+                    <Col>
+                        <Dropdown overlay={listAction} trigger={['click']} className='flex justify-end'>
+                            <a onClick={(e) => e.preventDefault()}>
+                                <Space>
+                                    <div className="img">
+                                        <img src={avatar} width={40} height={40} alt={''} />
+                                    </div>
+                                </Space>
+                            </a>
+
+                        </Dropdown>
+                    </Col>
+                </Row>
 
             </div>
             <DialogConfirmCommon
