@@ -1,0 +1,174 @@
+.modal_confirm_common {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.modal_confirm_common .btn_ok {
+    border-radius: 2px;
+    background: #0d9e6d;
+    color: #FFF;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: 0.15px;
+    height: 40px;
+    transition: .3s;
+    -webkit-transition: .3s;
+    margin: 0 8px;
+}
+
+.modal_confirm_common .btn_Cancel {
+    border-radius: 2px;
+    background: #e8e8e8;
+    color: #242424;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: 0.15px;
+    height: 40px;
+    transition: .3s;
+    -webkit-transition: .3s;
+    margin: 0 8px;
+}
+
+.modal_confirm_common .title {
+    color: #171717;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    /* line-height: 48px; */
+    letter-spacing: 0.5px;
+    text-align: left;
+    padding: 0 8px;
+}
+
+.modal_confirm_common .message {
+    color: #171717;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    /* line-height: 48px; */
+    letter-spacing: 0.5px;
+    text-align: left;
+    padding: 0 8px;
+}
+
+.modal_common .img_container {
+    position: relative;
+    border-radius: 15px;
+    background: #f3f3f1;
+    border: 1px solid #dbeafe;
+    min-width: 110px;
+    height: 100%;
+}
+
+.modal_common .title {
+    font-size: 18px;
+    color: #1e2330;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 20px;
+
+}
+
+/* @media only screen and (min-width: 993px) {
+    .modal_common .img_container {
+        min-height: 3600px;
+        height: 100%;
+    }
+}
+
+@media only screen and (max-width: 992px) {
+    .modal_common .img_container {
+        min-height: 110px;
+    }
+} */
+
+.modal_common .evaluate {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 20px 4px;
+}
+
+.modal_common .evaluate .evaluate_children {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+
+.modal_common .evaluate .show {
+    box-shadow: 5px 6px 6px 2px #e9ecef;
+    background: #f4f4f4;
+    border-radius: 4px;
+    padding: 8px 12px;
+}
+
+.modal_common .evaluate .show .avatar {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.modal_common .evaluate .message {
+    font-size: 14px;
+    color: #525252;
+    font-weight: 600;
+}
+
+@media only screen and (max-width: 575px) {
+    .modal_common .evaluate .message {
+        padding: 4px 8px 4px 0px;
+    }
+}
+
+@media only screen and (min-width: 576px) {
+    .modal_common .evaluate .message {
+        padding: 4px 8px 4px 48px;
+    }
+}
+
+.modal_common .evaluate .reply {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.modal_common .evaluate .reply small {
+    color: #b7b4b4;
+    font-size: 12px;
+}
+
+.modal_common .evaluate .reply:hover small {
+    color: #cb4c51;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.modal_common .evaluate .reply:hover .dots {
+    background-color: #cb4c51;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.modal_common .evaluate .dots {
+    height: 4px;
+    width: 4px;
+    margin-bottom: 2px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.modal_common .evaluate .input_container {
+    display: flex;
+    justify-content: start;
+    gap: 8px;
+}

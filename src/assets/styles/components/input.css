@@ -1,0 +1,328 @@
+.input-common {
+  position: relative;
+  margin-bottom: 8px;
+}
+
+.input-common .title {
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  z-index: 9;
+  background: #fff;
+  transition: all 0.3s ease;
+  margin-bottom: 8px;
+}
+
+
+.input-common.focused .title {
+  top: -12px;
+  left: 20px;
+  font-size: 16px;
+  padding: 0 3px;
+}
+
+.input-common.focused .title .label {
+  color: #0B80F3;
+}
+
+.input-common .title-content .is-required,
+.input-common .title .is-required,
+.select-common .title .is-required {
+  color: #FF1422;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 600;
+  letter-spacing: 0.15px;
+  margin-left: 4px;
+}
+
+.input-common .title-content .label,
+.input-common .title .label,
+.select-common .title .label {
+  color: #545e7d66;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: 0.15px;
+  text-align: left;
+}
+
+
+input.ant-input-number-input {
+  border-radius: 6px !important;
+  height: 44px;
+  width: 100%;
+  transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+  position: relative;
+}
+
+input.ant-input.ant-input-outlined,
+.ant-input-number,
+.ant-picker.ant-picker-middle.input-date-common,
+.ant-input-affix-wrapper {
+  border-radius: 8px !important;
+  height: 44px;
+  width: 100%;
+  transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+  position: relative;
+  border: 1px solid #CBD0DC;
+}
+
+input.ant-input-number-input {
+  border-radius: 6px !important;
+  height: 44px;
+  width: 100%;
+  transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+  position: relative;
+}
+
+
+.upload-common {
+  position: relative;
+}
+
+.upload-common .circle {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.upload-common .card {
+  width: 100%;
+  height: 100%;
+}
+
+.upload-common .btn-primary {
+  border-color: #ff3f3f !important;
+  color: #ffffff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  background-color: #ff3f3f !important;
+  border-color: #ff3f3f !important;
+}
+
+.upload-common .main-image {
+  background: #f4f4f4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 260px;
+  width: 100%;
+  min-height: 10vh;
+  max-height: 40vh;
+  overflow: hidden;
+  border: 1px solid #d3d3d3;
+  cursor: pointer;
+  position: relative;
+  border-radius: 8px;
+}
+
+.upload-common .label {
+  color: #545e7d66;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: 0.15px;
+  text-align: left;
+}
+
+.upload-common .main-image img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+}
+
+.upload-common .main-image .close-btn {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  z-index: 12;
+}
+
+.upload-common .main-image .close-btn i {
+  border: 2px solid #FFF;
+  border-radius: 50%;
+  font-size: 20px;
+  color: #cb4c51;
+}
+
+.input-common-picker .title {
+  margin-bottom: 8px;
+}
+
+.input-common-picker .title .label {
+  color: #454d66;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: 0.15px;
+  text-align: left;
+}
+
+.file-upload {
+  display: block;
+  text-align: center;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 12px;
+}
+
+.file-upload .file-select {
+  display: flex;
+  border: 2px solid #dce4ec;
+  color: #34495e;
+  cursor: pointer;
+  height: 60px;
+  line-height: 60px;
+  text-align: left;
+  background: #FFFFFF;
+  overflow: hidden;
+  position: relative;
+  border-radius: 4px;
+}
+
+.file-upload .file-select .file-select-button {
+  background: #dce4ec;
+  padding: 0 10px;
+  display: inline-block;
+  /* height: 60px; */
+  /* line-height: 60px; */
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.file-upload .file-select .file-select-name {
+  line-height: 60px;
+  display: inline-block;
+  padding: 0 10px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.file-upload .file-select:hover {
+  border-color: #34495e;
+  transition: all .2s ease-in-out;
+  -moz-transition: all .2s ease-in-out;
+  -webkit-transition: all .2s ease-in-out;
+  -o-transition: all .2s ease-in-out;
+}
+
+.file-upload .file-select:hover .file-select-button {
+  background: #34495e;
+  color: #FFFFFF;
+  transition: all .2s ease-in-out;
+  -moz-transition: all .2s ease-in-out;
+  -webkit-transition: all .2s ease-in-out;
+  -o-transition: all .2s ease-in-out;
+}
+
+.file-upload.active .file-select {
+  border-color: #3fa46a;
+  transition: all .2s ease-in-out;
+  -moz-transition: all .2s ease-in-out;
+  -webkit-transition: all .2s ease-in-out;
+  -o-transition: all .2s ease-in-out;
+}
+
+.file-upload.active .file-select .file-select-button {
+  background: #3fa46a;
+  color: #FFFFFF;
+  transition: all .2s ease-in-out;
+  -moz-transition: all .2s ease-in-out;
+  -webkit-transition: all .2s ease-in-out;
+  -o-transition: all .2s ease-in-out;
+}
+
+.file-upload .file-select input[type=file] {
+  z-index: 100;
+  cursor: pointer;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+
+.file-upload .file-select.file-select-disabled {
+  opacity: 0.65;
+}
+
+.file-upload .file-select.file-select-disabled:hover {
+  cursor: default;
+  display: block;
+  border: 2px solid #dce4ec;
+  color: #34495e;
+  cursor: pointer;
+  height: 60px;
+  line-height: 60px;
+  margin-top: 5px;
+  text-align: left;
+  background: #FFFFFF;
+  overflow: hidden;
+  position: relative;
+}
+
+.file-upload .file-select.file-select-disabled:hover .file-select-button {
+  background: #dce4ec;
+  color: #666666;
+  padding: 0 10px;
+  display: inline-block;
+  height: 60px;
+  line-height: 60px;
+}
+
+.file-upload .file-select.file-select-disabled:hover .file-select-name {
+  line-height: 60px;
+  display: inline-block;
+  padding: 0 10px;
+}
+
+.upload-product {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%
+}
+
+.upload-product label.value {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  text-align: center;
+  border: 1px solid #4f4d4d;
+  z-index: 10;
+  background: #0d9e6d;
+  border-radius: 50%;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.upload-product label.no-value {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  text-align: center;
+  background: #0d9e6d;
+  border-radius: 8px;
+  padding: 8px;
+  cursor: pointer;
+
+}
+
+.upload-product img {
+  border-radius: 15px;
+  width: 100%;
+  height: 100%;
+}
+
+.upload-product input[type="file"] {
+  display: none;
+}
+
+.input-array-custom-common {
+  display: flex;
+  justify-content: center;
+}
