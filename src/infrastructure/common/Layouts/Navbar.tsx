@@ -2,7 +2,7 @@ import React from 'react'
 import { Layout, Menu } from 'antd';
 import '../../../assets/styles/page/MainLayout.css';
 import { Link } from 'react-router-dom';
-import logo from '../../../assets/images/logo.png'
+import logo from '../../../assets/images/logo.jpg'
 
 const { Sider } = Layout;
 
