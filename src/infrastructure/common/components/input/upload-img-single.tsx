@@ -1,8 +1,7 @@
 import { Upload } from 'antd';
 import { useEffect, useRef, useState } from 'react';
-import { PlusOutlined } from '@ant-design/icons';
 import "../../../../assets/styles/components/input.css";
-import { UploadListType } from 'antd/es/upload/interface';
+import { WarningMessage } from '../toast/notificationToast';
 
 type Props = {
     label: string,
@@ -27,11 +26,29 @@ function UploadSingleImage(props: Props) {
     const inputRef = useRef(null);
 
     const handleChange = (event: any) => {
+        console.log("event", event);
         getBase64(event.file, (url: any) => {
-            setData({
-                [attribute]: event.file || '',
-            });
-            setValue(url)
+            if (String(event.file.name).indexOf("shp") !== -1) {
+                setData({
+                    ["uriexcel"]: "",
+                    ["urishp"]: event.file.name || '',
+                    ["uridbf"]: String(event.file.name).replace(".shp", ".dbf") || '',
+                    ["loaifile"]: "shp"
+                });
+                setValue(url)
+            }
+            else if (String(event.file.name).indexOf("xlsx") !== -1) {
+                setData({
+                    ["uriexcel"]: event.file.name || '',
+                    ["urishp"]: "",
+                    ["uridbf"]: "",
+                    ["loaifile"]: "xlsx"
+                });
+                setValue(url)
+            }
+            else {
+                alert("Định dạng file không đúng")
+            }
         });
     };
 

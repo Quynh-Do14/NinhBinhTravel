@@ -8,11 +8,10 @@ import ButtonCommon from '../../infrastructure/common/components/button/button-c
 import InputTextCommon from '../../infrastructure/common/components/input/input-text';
 import { FullPageLoading } from '../../infrastructure/common/components/controls/loading';
 import { WarningMessage } from '../../infrastructure/common/components/toast/notificationToast';
-import chuyenDeService from '../../infrastructure/repositories/chuyende/chuyende.service';
-import fileService from '../../infrastructure/repositories/file/file.service';
-import UploadSingleImage from '../../infrastructure/common/components/input/upload-img-single';
+import InputDateCommon from '../../infrastructure/common/components/input/input-date';
+import anhvetinhService from '../../infrastructure/repositories/anhvetinh/danhmuc.service';
 
-const AddChuyenDeManagement = () => {
+const AddAnhVeTinhManagement = () => {
     const [validate, setValidate] = useState<any>({});
     const [loading, setLoading] = useState<boolean>(false);
     const [submittedTime, setSubmittedTime] = useState<any>();
@@ -39,30 +38,22 @@ const AddChuyenDeManagement = () => {
     };
 
     const onBack = () => {
-        navigate(ROUTE_PATH.CHUYENDE_MANAGEMENT)
+        navigate(ROUTE_PATH.ANHVETINH_MANAGEMENT)
     }
 
     const onCreateAsync = async () => {
         await setSubmittedTime(Date.now());
-        const formData = new FormData();
-        formData.append('img', dataRequest.filename)
         if (isValidData()) {
-            await fileService.UploadFle(
-                formData,
+            await anhvetinhService.CreateAnhvetinh(
+                {
+                    tenanhvetinh: dataRequest.tenanhvetinh,
+                    urianhvetinh: dataRequest.urianhvetinh,
+                    ngaytaoanhvetinh: dataRequest.ngaytaoanhvetinh,
+                    idanhmucanhvetinhnoi: 1
+                },
                 onBack,
                 setLoading
-            ).then((res) => {
-                chuyenDeService.CreateChuyenDe(
-                    {
-                        ten: dataRequest.ten,
-                        filename: res.res
-                    },
-                    onBack,
-                    setLoading
-                )
-            })
-
-
+            )
         }
         else {
             alert("Nhập thiếu thông tin")
@@ -71,9 +62,9 @@ const AddChuyenDeManagement = () => {
 
     return (
         <MainLayout
-            title={'Thêm người dùng'}
-            breadcrumb={'Nguời dùng'}
-            redirect={ROUTE_PATH.CHUYENDE_MANAGEMENT}
+            title={'Thêm ảnh vệ tinh'}
+            breadcrumb={'Ảnh vệ tinh'}
+            redirect={ROUTE_PATH.ANHVETINH_MANAGEMENT}
         >
             <div className="management-container">
                 <div className="content">
@@ -96,10 +87,10 @@ const AddChuyenDeManagement = () => {
                                 <Row gutter={[30, 20]}>
                                     <Col span={24}>
                                         <InputTextCommon
-                                            label={"Tiêu đề"}
-                                            attribute={"ten"}
+                                            label={"Tên ảnh"}
+                                            attribute={"tenanhvetinh"}
                                             isRequired={true}
-                                            dataAttribute={dataRequest.ten}
+                                            dataAttribute={dataRequest.tenanhvetinh}
                                             setData={setDataRequest}
                                             disabled={false}
                                             validate={validate}
@@ -108,21 +99,41 @@ const AddChuyenDeManagement = () => {
                                         />
                                     </Col>
                                     <Col span={24}>
-                                        <UploadSingleImage
-                                            dataAttribute={dataRequest.filename}
+                                        <InputTextCommon
+                                            label={"URI ảnh"}
+                                            attribute={"urianhvetinh"}
+                                            isRequired={true}
+                                            dataAttribute={dataRequest.urianhvetinh}
                                             setData={setDataRequest}
-                                            attribute={'filename'}
-                                            label={'Ảnh'}
+                                            disabled={false}
+                                            validate={validate}
+                                            setValidate={setValidate}
+                                            submittedTime={submittedTime}
                                         />
                                     </Col>
+                                    <Col span={24}>
+                                        <InputDateCommon
+                                            label={"Ngày tạo"}
+                                            attribute={"ngaytaoanhvetinh"}
+                                            isRequired={true}
+                                            dataAttribute={dataRequest.ngaytaoanhvetinh}
+                                            setData={setDataRequest}
+                                            disabled={false}
+                                            validate={validate}
+                                            setValidate={setValidate}
+                                            submittedTime={submittedTime}
+                                            disabledToDate={null}
+                                        />
+                                    </Col>
+
                                 </Row>
                             </Col>
                         </Row>
                     </div>
                 </div>
-            </div>
+            </div >
             <FullPageLoading isLoading={loading} />
-        </MainLayout>
+        </MainLayout >
     )
 }
-export default AddChuyenDeManagement
+export default AddAnhVeTinhManagement

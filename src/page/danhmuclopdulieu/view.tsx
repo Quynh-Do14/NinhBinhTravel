@@ -1,18 +1,22 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import '../../assets/styles/page/Management.css';
 import { Col, Row } from 'antd';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { ROUTE_PATH } from '../../core/common/appRouter';
 import MainLayout from '../../infrastructure/common/Layouts/Main-Layout';
 import ButtonCommon from '../../infrastructure/common/components/button/button-common';
 import InputTextCommon from '../../infrastructure/common/components/input/input-text';
 import { FullPageLoading } from '../../infrastructure/common/components/controls/loading';
+import userService from '../../infrastructure/repositories/user/user.service';
 import { WarningMessage } from '../../infrastructure/common/components/toast/notificationToast';
-import chuyenDeService from '../../infrastructure/repositories/chuyende/chuyende.service';
-import fileService from '../../infrastructure/repositories/file/file.service';
-import UploadSingleImage from '../../infrastructure/common/components/input/upload-img-single';
+import InputPasswordCommon from '../../infrastructure/common/components/input/input-password';
+import newsService from '../../infrastructure/repositories/news/news.service';
+import InputTextAreaCommon from '../../infrastructure/common/components/input/text-area-common';
+import UploadAvatar from '../../infrastructure/common/components/input/upload-avatar';
+import danhmucService from '../../infrastructure/repositories/danhmuc/danhmuc.service';
 
-const AddChuyenDeManagement = () => {
+const SlugDanhMucLopDuLieuManagement = () => {
+    const [detail, setDetail] = useState<any>({});
     const [validate, setValidate] = useState<any>({});
     const [loading, setLoading] = useState<boolean>(false);
     const [submittedTime, setSubmittedTime] = useState<any>();
@@ -20,6 +24,7 @@ const AddChuyenDeManagement = () => {
     const dataRequest = _data;
     const navigate = useNavigate();
 
+    const param = useParams();
     const setDataRequest = (data: any) => {
         Object.assign(dataRequest, { ...data });
         _setData({ ...dataRequest });
@@ -39,30 +44,48 @@ const AddChuyenDeManagement = () => {
     };
 
     const onBack = () => {
-        navigate(ROUTE_PATH.CHUYENDE_MANAGEMENT)
+        navigate(ROUTE_PATH.DANH_MUC_LOP_DU_LIEU_MANAGEMENT)
     }
 
-    const onCreateAsync = async () => {
+    const onGetByIdAsync = async () => {
+        if (String(param.id)) {
+            try {
+                await danhmucService.GetDanhMucById(
+                    String(param.id),
+                    setLoading
+                ).then((res) => {
+                    setDetail(res.danhmuclopbando)
+                })
+            }
+            catch (error) {
+                console.error(error)
+            }
+        }
+
+    }
+    useEffect(() => {
+        onGetByIdAsync().then(() => { })
+    }, [])
+
+    useEffect(() => {
+        if (detail) {
+            setDataRequest({
+                tendanhmuclopbando: detail.tendanhmuclopbando,
+            });
+        };
+    }, [detail]);
+
+    const onUpdateAsync = async () => {
         await setSubmittedTime(Date.now());
-        const formData = new FormData();
-        formData.append('img', dataRequest.filename)
         if (isValidData()) {
-            await fileService.UploadFle(
-                formData,
+            await danhmucService.UpdateDanhmuc(
+                String(param.id),
+                {
+                    tendanhmuclopbando: dataRequest.tendanhmuclopbando,
+                },
                 onBack,
                 setLoading
-            ).then((res) => {
-                chuyenDeService.CreateChuyenDe(
-                    {
-                        ten: dataRequest.ten,
-                        filename: res.res
-                    },
-                    onBack,
-                    setLoading
-                )
-            })
-
-
+            )
         }
         else {
             alert("Nhập thiếu thông tin")
@@ -71,9 +94,9 @@ const AddChuyenDeManagement = () => {
 
     return (
         <MainLayout
-            title={'Thêm người dùng'}
-            breadcrumb={'Nguời dùng'}
-            redirect={ROUTE_PATH.CHUYENDE_MANAGEMENT}
+            title={'Chi tiết ảnh vệ tinh'}
+            breadcrumb={'Ảnh vệ tinh'}
+            redirect={ROUTE_PATH.DANH_MUC_LOP_DU_LIEU_MANAGEMENT}
         >
             <div className="management-container">
                 <div className="content">
@@ -85,34 +108,26 @@ const AddChuyenDeManagement = () => {
                         />
                         <ButtonCommon
                             classColor={'red'}
-                            onClick={onCreateAsync}
-                            title={'Thêm mới'}
+                            onClick={onUpdateAsync}
+                            title={'Cập nhật'}
                         />
                     </div>
                     <div className="form-container">
                         <Row gutter={[30, 20]}>
                             <Col span={24} className="border-add">
-                                <div className="legend-title">Thêm thông tin mới</div>
+                                <div className="legend-title">Cập nhật thông tin</div>
                                 <Row gutter={[30, 20]}>
                                     <Col span={24}>
                                         <InputTextCommon
-                                            label={"Tiêu đề"}
-                                            attribute={"ten"}
+                                            label={"Tên danh mục"}
+                                            attribute={"tendanhmuclopbando"}
                                             isRequired={true}
-                                            dataAttribute={dataRequest.ten}
+                                            dataAttribute={dataRequest.tendanhmuclopbando}
                                             setData={setDataRequest}
                                             disabled={false}
                                             validate={validate}
                                             setValidate={setValidate}
                                             submittedTime={submittedTime}
-                                        />
-                                    </Col>
-                                    <Col span={24}>
-                                        <UploadSingleImage
-                                            dataAttribute={dataRequest.filename}
-                                            setData={setDataRequest}
-                                            attribute={'filename'}
-                                            label={'Ảnh'}
                                         />
                                     </Col>
                                 </Row>
@@ -125,4 +140,5 @@ const AddChuyenDeManagement = () => {
         </MainLayout>
     )
 }
-export default AddChuyenDeManagement
+
+export default SlugDanhMucLopDuLieuManagement

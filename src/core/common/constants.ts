@@ -13,13 +13,29 @@ export default class Constants {
                 link: ROUTE_PATH.BLOG_MANAGEMENT,
             },
             {
+                label: "Danh mục",
+                link: ROUTE_PATH.DANH_MUC_LOP_DU_LIEU_MANAGEMENT,
+            },
+            {
+                label: "Lớp dữ liệu",
+                link: ROUTE_PATH.LOPBANDO_MANAGEMENT,
+            },
+            {
+                label: "API",
+                link: ROUTE_PATH.API_MANAGEMENT,
+            },
+            {
+                label: "Ảnh vệ tinh",
+                link: ROUTE_PATH.ANHVETINH_MANAGEMENT,
+            },
+            {
                 label: "Bản đồ chuyên đề",
                 link: ROUTE_PATH.CHUYENDE_MANAGEMENT,
             },
-            {
-                label: "Điểm quan trắc",
-                link: ROUTE_PATH.DIEMQUANTRAC_MANAGEMENT,
-            },
+            // {
+            //     label: "Điểm quan trắc",
+            //     link: ROUTE_PATH.DIEMQUANTRAC_MANAGEMENT,
+            // },
             {
                 label: "Phản ánh",
                 link: ROUTE_PATH.PHANANH_MANAGEMENT,

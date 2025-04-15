@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import '../../assets/styles/page/Management.css';
 import { Col, Row } from 'antd';
 import { useNavigate } from 'react-router-dom';
@@ -7,12 +7,21 @@ import MainLayout from '../../infrastructure/common/Layouts/Main-Layout';
 import ButtonCommon from '../../infrastructure/common/components/button/button-common';
 import InputTextCommon from '../../infrastructure/common/components/input/input-text';
 import { FullPageLoading } from '../../infrastructure/common/components/controls/loading';
-import userService from '../../infrastructure/repositories/user/user.service';
 import { WarningMessage } from '../../infrastructure/common/components/toast/notificationToast';
-import InputPasswordCommon from '../../infrastructure/common/components/input/input-password';
+import UploadAvatar from '../../infrastructure/common/components/input/upload-avatar';
+import InputTextAreaCommon from '../../infrastructure/common/components/input/text-area-common';
+import InputDateCommon from '../../infrastructure/common/components/input/input-date';
+import chuyenDeService from '../../infrastructure/repositories/chuyende/chuyende.service';
+import UploadListImage from '../../infrastructure/common/components/input/upload-list-image';
+import diemQuanTracService from '../../infrastructure/repositories/diemquantrac/diemquantrac.service';
+import danhmucService from '../../infrastructure/repositories/danhmuc/danhmuc.service';
+import danhMucAPIService from '../../infrastructure/repositories/api/api.service';
+import dulieulopService from '../../infrastructure/repositories/dulieulop/dulieulop.service';
+import InputSelectCatrgoryCommon from '../../infrastructure/common/components/input/select-category-common';
+import InputSelectCatrgoryAPI2 from '../../infrastructure/common/components/input/select-category2';
 
-
-const AddUserManagement = () => {
+const AddAPIManagement = () => {
+    const [listDanhMuc, setListDanhMuc] = useState<Array<any>>([])
     const [validate, setValidate] = useState<any>({});
     const [loading, setLoading] = useState<boolean>(false);
     const [submittedTime, setSubmittedTime] = useState<any>();
@@ -39,20 +48,19 @@ const AddUserManagement = () => {
     };
 
     const onBack = () => {
-        navigate(ROUTE_PATH.USER_MANAGEMENT)
+        navigate(ROUTE_PATH.API_MANAGEMENT)
     }
 
     const onCreateAsync = async () => {
         await setSubmittedTime(Date.now());
         if (isValidData()) {
-            await userService.CreateUser(
+            await danhMucAPIService.CreateDanhMucAPI(
                 {
-                    us: dataRequest.name,
-                    email: dataRequest.email,
-                    firstname: dataRequest.firstname,
-                    lastname: dataRequest.lastname,
-                    sdt: dataRequest.sdt,
-                    pa: dataRequest.password,
+                    tenapi: dataRequest.tenapi,
+                    uriapi: dataRequest.uriapi,
+                    ngaytaoapi: dataRequest.ngaytaoapi,
+                    iddanhmucapinoi: 1,
+                    iddulieulopbandonoi: dataRequest.iddulieulopbandonoi,
                 },
                 onBack,
                 setLoading
@@ -63,11 +71,35 @@ const AddUserManagement = () => {
         };
     };
 
+    console.log("dataRequest", dataRequest);
+
+    const onGetListAsync = async () => {
+        const param = {
+            // page: 0,
+            // size: size,
+            // search: name,
+        }
+        try {
+            await dulieulopService.GetDulieulop(
+                param,
+                setLoading
+            ).then((res) => {
+                setListDanhMuc(res.data.dulieulopbandos)
+            })
+        }
+        catch (error) {
+            console.error(error)
+        }
+    }
+    useEffect(() => {
+        onGetListAsync();
+    }, [])
+
     return (
         <MainLayout
-            title={'Thêm người dùng'}
-            breadcrumb={'Nguời dùng'}
-            redirect={ROUTE_PATH.USER_MANAGEMENT}
+            title={'Thêm API'}
+            breadcrumb={'API'}
+            redirect={ROUTE_PATH.API_MANAGEMENT}
         >
             <div className="management-container">
                 <div className="content">
@@ -88,12 +120,12 @@ const AddUserManagement = () => {
                             <Col span={24} className="border-add">
                                 <div className="legend-title">Thêm thông tin mới</div>
                                 <Row gutter={[30, 20]}>
-                                    <Col xs={24} sm={24} md={24} lg={12} xl={12}>
+                                    <Col span={24}>
                                         <InputTextCommon
-                                            label={"Tên người dùng"}
-                                            attribute={"name"}
+                                            label={"Tên API"}
+                                            attribute={"tenapi"}
                                             isRequired={true}
-                                            dataAttribute={dataRequest.name}
+                                            dataAttribute={dataRequest.tenapi}
                                             setData={setDataRequest}
                                             disabled={false}
                                             validate={validate}
@@ -101,12 +133,12 @@ const AddUserManagement = () => {
                                             submittedTime={submittedTime}
                                         />
                                     </Col>
-                                    <Col xs={24} sm={24} md={24} lg={12} xl={12}>
+                                    <Col span={24}>
                                         <InputTextCommon
-                                            label={"Email"}
-                                            attribute={"email"}
+                                            label={"URI"}
+                                            attribute={"uriapi"}
                                             isRequired={true}
-                                            dataAttribute={dataRequest.email}
+                                            dataAttribute={dataRequest.uriapi}
                                             setData={setDataRequest}
                                             disabled={false}
                                             validate={validate}
@@ -114,66 +146,41 @@ const AddUserManagement = () => {
                                             submittedTime={submittedTime}
                                         />
                                     </Col>
-                                    <Col xs={24} sm={24} md={24} lg={12} xl={12}>
-                                        <InputPasswordCommon
-                                            label={"Mật khẩu"}
-                                            attribute={"password"}
+                                    <Col span={24}>
+                                        <InputDateCommon
+                                            label={"Ngày tạo"}
+                                            attribute={"ngaytaoapi"}
                                             isRequired={true}
-                                            dataAttribute={dataRequest.password}
+                                            dataAttribute={dataRequest.ngaytaoapi}
                                             setData={setDataRequest}
                                             disabled={false}
                                             validate={validate}
                                             setValidate={setValidate}
                                             submittedTime={submittedTime}
+                                            disabledToDate={null}
                                         />
                                     </Col>
-                                    <Col xs={24} sm={24} md={24} lg={12} xl={12}>
-                                        <InputTextCommon
-                                            label={"Họ"}
-                                            attribute={"firstname"}
+                                    <Col span={24}>
+                                        <InputSelectCatrgoryAPI2
+                                            label={"Loại dữ liệu"}
+                                            attribute={"iddulieulopbandonoi"}
                                             isRequired={true}
-                                            dataAttribute={dataRequest.firstname}
+                                            dataAttribute={dataRequest.iddulieulopbandonoi}
                                             setData={setDataRequest}
                                             disabled={false}
                                             validate={validate}
                                             setValidate={setValidate}
                                             submittedTime={submittedTime}
-                                        />
-                                    </Col>
-                                    <Col xs={24} sm={24} md={24} lg={12} xl={12}>
-                                        <InputTextCommon
-                                            label={"Tên"}
-                                            attribute={"lastname"}
-                                            isRequired={true}
-                                            dataAttribute={dataRequest.lastname}
-                                            setData={setDataRequest}
-                                            disabled={false}
-                                            validate={validate}
-                                            setValidate={setValidate}
-                                            submittedTime={submittedTime}
-                                        />
-                                    </Col>
-                                    <Col xs={24} sm={24} md={24} lg={12} xl={12}>
-                                        <InputTextCommon
-                                            label={"SĐT"}
-                                            attribute={"sdt"}
-                                            isRequired={true}
-                                            dataAttribute={dataRequest.sdt}
-                                            setData={setDataRequest}
-                                            disabled={false}
-                                            validate={validate}
-                                            setValidate={setValidate}
-                                            submittedTime={submittedTime}
-                                        />
+                                            listDataOfItem={listDanhMuc} />
                                     </Col>
                                 </Row>
                             </Col>
                         </Row>
                     </div>
                 </div>
-            </div>
+            </div >
             <FullPageLoading isLoading={loading} />
-        </MainLayout>
+        </MainLayout >
     )
 }
-export default AddUserManagement
+export default AddAPIManagement

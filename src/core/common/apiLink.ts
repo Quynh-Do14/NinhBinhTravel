@@ -60,4 +60,32 @@ export class Endpoint {
     static File = class {
         static Upload = "/bandochuyende/upanhbandochuyende"
     }
+    static Danhmuc = class {
+        static Get = "/danhmuclopbando"
+        static GetById = "/danhmuclopbando"
+        static Create = "/danhmuclopbando"
+        static Update = "/danhmuclopbando"
+        static Delete = "/danhmuclopbando"
+    }
+    static Anhvetinh = class {
+        static Get = "/anhvetinh"
+        static GetById = "/anhvetinh"
+        static Create = "/anhvetinh"
+        static Update = "/anhvetinh"
+        static Delete = "/anhvetinh"
+    }
+    static Dulieulop = class {
+        static Get = "/dulieulopbando"
+        static GetById = "/dulieulopbando"
+        static Create = "/dulieulopbando"
+        static Update = "/dulieulopbando"
+        static Delete = "/dulieulopbando"
+    }
+    static DanhMucAPI = class {
+        static Get = "/api"
+        static GetById = "/api"
+        static Create = "/api"
+        static Update = "/api"
+        static Delete = "/api"
+    }
 }

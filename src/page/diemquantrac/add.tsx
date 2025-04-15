@@ -62,7 +62,7 @@ const AddDiemQuanTracManagement = () => {
             )
         }
         else {
-            WarningMessage("Nhập thiếu thông tin", "Vui lòng nhập đầy đủ thông tin")
+            alert("Nhập thiếu thông tin")
         };
     };
 

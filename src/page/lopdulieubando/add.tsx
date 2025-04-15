@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import '../../assets/styles/page/Management.css';
 import { Col, Row } from 'antd';
 import { useNavigate } from 'react-router-dom';
@@ -7,12 +7,32 @@ import MainLayout from '../../infrastructure/common/Layouts/Main-Layout';
 import ButtonCommon from '../../infrastructure/common/components/button/button-common';
 import InputTextCommon from '../../infrastructure/common/components/input/input-text';
 import { FullPageLoading } from '../../infrastructure/common/components/controls/loading';
-import userService from '../../infrastructure/repositories/user/user.service';
 import { WarningMessage } from '../../infrastructure/common/components/toast/notificationToast';
-import InputPasswordCommon from '../../infrastructure/common/components/input/input-password';
+import InputDateCommon from '../../infrastructure/common/components/input/input-date';
+import anhvetinhService from '../../infrastructure/repositories/anhvetinh/danhmuc.service';
+import dulieulopService from '../../infrastructure/repositories/dulieulop/dulieulop.service';
+import UploadSingleImage from '../../infrastructure/common/components/input/upload-img-single';
+import InputSelectCatrgoryCommon from '../../infrastructure/common/components/input/select-category-common';
+import danhmucService from '../../infrastructure/repositories/danhmuc/danhmuc.service';
+import InputSelectCatrgoryAPI from '../../infrastructure/common/components/input/select-category';
+const listDataOfItem = [
+    {
+        value: "Điểm",
+        label: "Điểm",
+    },
+    {
+        value: "Đường",
+        label: "Đường",
+    },
+    {
+        value: "Vùng",
+        label: "Vùng",
+    },
 
 
-const AddUserManagement = () => {
+]
+const AddLopDuLieuBanDoManagement = () => {
+    const [listDanhMuc, setListDanhMuc] = useState<Array<any>>([])
     const [validate, setValidate] = useState<any>({});
     const [loading, setLoading] = useState<boolean>(false);
     const [submittedTime, setSubmittedTime] = useState<any>();
@@ -39,20 +59,22 @@ const AddUserManagement = () => {
     };
 
     const onBack = () => {
-        navigate(ROUTE_PATH.USER_MANAGEMENT)
+        navigate(ROUTE_PATH.LOPBANDO_MANAGEMENT)
     }
 
     const onCreateAsync = async () => {
         await setSubmittedTime(Date.now());
         if (isValidData()) {
-            await userService.CreateUser(
+            await dulieulopService.CreateDulieulop(
                 {
-                    us: dataRequest.name,
-                    email: dataRequest.email,
-                    firstname: dataRequest.firstname,
-                    lastname: dataRequest.lastname,
-                    sdt: dataRequest.sdt,
-                    pa: dataRequest.password,
+                    tendulieu: dataRequest.tendulieu,
+                    urishp: dataRequest.urishp || "",
+                    iddanhmuclopbandonoi: dataRequest.iddanhmuclopbandonoi,
+                    uriexcel: dataRequest.uriexcel || "",
+                    uridbf: dataRequest.uridbf || "",
+                    loaifile: dataRequest.loaifile || "",
+                    hienthimacdinh: 1,
+                    loaidulieu: dataRequest.loaidulieu
                 },
                 onBack,
                 setLoading
@@ -63,11 +85,32 @@ const AddUserManagement = () => {
         };
     };
 
+    const onGetListAsync = async () => {
+        const param = {
+            // page: 0,
+            // size: size,
+            // search: name,
+        }
+        try {
+            await danhmucService.GetDanhmuc(
+                param,
+                setLoading
+            ).then((res) => {
+                setListDanhMuc(res.data.danhmuclopbandos)
+            })
+        }
+        catch (error) {
+            console.error(error)
+        }
+    }
+    useEffect(() => {
+        onGetListAsync();
+    }, [])
     return (
         <MainLayout
-            title={'Thêm người dùng'}
-            breadcrumb={'Nguời dùng'}
-            redirect={ROUTE_PATH.USER_MANAGEMENT}
+            title={'Thêm lớp bản đồ'}
+            breadcrumb={'Lớp bản đồ'}
+            redirect={ROUTE_PATH.LOPBANDO_MANAGEMENT}
         >
             <div className="management-container">
                 <div className="content">
@@ -88,12 +131,12 @@ const AddUserManagement = () => {
                             <Col span={24} className="border-add">
                                 <div className="legend-title">Thêm thông tin mới</div>
                                 <Row gutter={[30, 20]}>
-                                    <Col xs={24} sm={24} md={24} lg={12} xl={12}>
+                                    <Col span={24}>
                                         <InputTextCommon
-                                            label={"Tên người dùng"}
-                                            attribute={"name"}
+                                            label={"Tên dữ liệu"}
+                                            attribute={"tendulieu"}
                                             isRequired={true}
-                                            dataAttribute={dataRequest.name}
+                                            dataAttribute={dataRequest.tendulieu}
                                             setData={setDataRequest}
                                             disabled={false}
                                             validate={validate}
@@ -101,69 +144,38 @@ const AddUserManagement = () => {
                                             submittedTime={submittedTime}
                                         />
                                     </Col>
-                                    <Col xs={24} sm={24} md={24} lg={12} xl={12}>
-                                        <InputTextCommon
-                                            label={"Email"}
-                                            attribute={"email"}
+                                    <Col span={24}>
+                                        <InputSelectCatrgoryAPI
+                                            label={"Danh mục lớp bản đồ nội"}
+                                            attribute={"iddanhmuclopbandonoi"}
                                             isRequired={true}
-                                            dataAttribute={dataRequest.email}
+                                            dataAttribute={dataRequest.iddanhmuclopbandonoi}
                                             setData={setDataRequest}
                                             disabled={false}
                                             validate={validate}
                                             setValidate={setValidate}
                                             submittedTime={submittedTime}
-                                        />
+                                            listDataOfItem={listDanhMuc} />
                                     </Col>
-                                    <Col xs={24} sm={24} md={24} lg={12} xl={12}>
-                                        <InputPasswordCommon
-                                            label={"Mật khẩu"}
-                                            attribute={"password"}
+                                    <Col span={24}>
+                                        <InputSelectCatrgoryCommon
+                                            label={"Loại dữ liệu"}
+                                            attribute={"loaidulieu"}
                                             isRequired={true}
-                                            dataAttribute={dataRequest.password}
+                                            dataAttribute={dataRequest.loaidulieu}
                                             setData={setDataRequest}
                                             disabled={false}
                                             validate={validate}
                                             setValidate={setValidate}
                                             submittedTime={submittedTime}
-                                        />
+                                            listDataOfItem={listDataOfItem} />
                                     </Col>
-                                    <Col xs={24} sm={24} md={24} lg={12} xl={12}>
-                                        <InputTextCommon
-                                            label={"Họ"}
-                                            attribute={"firstname"}
-                                            isRequired={true}
-                                            dataAttribute={dataRequest.firstname}
+                                    <Col span={24}>
+                                        <UploadSingleImage
+                                            label={"Chọn file"}
+                                            attribute={""}
+                                            dataAttribute={dataRequest.f}
                                             setData={setDataRequest}
-                                            disabled={false}
-                                            validate={validate}
-                                            setValidate={setValidate}
-                                            submittedTime={submittedTime}
-                                        />
-                                    </Col>
-                                    <Col xs={24} sm={24} md={24} lg={12} xl={12}>
-                                        <InputTextCommon
-                                            label={"Tên"}
-                                            attribute={"lastname"}
-                                            isRequired={true}
-                                            dataAttribute={dataRequest.lastname}
-                                            setData={setDataRequest}
-                                            disabled={false}
-                                            validate={validate}
-                                            setValidate={setValidate}
-                                            submittedTime={submittedTime}
-                                        />
-                                    </Col>
-                                    <Col xs={24} sm={24} md={24} lg={12} xl={12}>
-                                        <InputTextCommon
-                                            label={"SĐT"}
-                                            attribute={"sdt"}
-                                            isRequired={true}
-                                            dataAttribute={dataRequest.sdt}
-                                            setData={setDataRequest}
-                                            disabled={false}
-                                            validate={validate}
-                                            setValidate={setValidate}
-                                            submittedTime={submittedTime}
                                         />
                                     </Col>
                                 </Row>
@@ -171,9 +183,9 @@ const AddUserManagement = () => {
                         </Row>
                     </div>
                 </div>
-            </div>
+            </div >
             <FullPageLoading isLoading={loading} />
-        </MainLayout>
+        </MainLayout >
     )
 }
-export default AddUserManagement
+export default AddLopDuLieuBanDoManagement

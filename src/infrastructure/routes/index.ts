@@ -1,11 +1,23 @@
 import { ROUTE_PATH } from "../../core/common/appRouter";
+import ListAnhVeTinhManagement from "../../page/anhvetinh";
+import AddAnhVeTinhManagement from "../../page/anhvetinh/add";
+import SlugAnhVeTinhManagement from "../../page/anhvetinh/view";
+import ListAPIManagement from "../../page/apibando";
+import AddAPIManagement from "../../page/apibando/add";
+import SlugAPIManagement from "../../page/apibando/view";
 import LoginPage from "../../page/Auth/Login";
 import ListBanDoManagement from "../../page/bandochuyende";
 import AddChuyenDeManagement from "../../page/bandochuyende/add";
 import ListBaoCaoManagement from "../../page/baocao";
 import AddBaoCaoManagement from "../../page/baocao/add";
+import ListDanhMucLopDuLieuManagement from "../../page/danhmuclopdulieu";
+import AddDanhMucLopDuLieuManagement from "../../page/danhmuclopdulieu/add";
+import SlugDanhMucLopDuLieuManagement from "../../page/danhmuclopdulieu/view";
 import ListDiemQuanTracManagement from "../../page/diemquantrac";
 import AddDiemQuanTracManagement from "../../page/diemquantrac/add";
+import ListLopDuLieuBanDoManagement from "../../page/lopdulieubando";
+import AddLopDuLieuBanDoManagement from "../../page/lopdulieubando/add";
+import SlugLopDuLieuBanDoManagement from "../../page/lopdulieubando/view";
 import ListNewsManagement from "../../page/news-management";
 import AddNewsManagement from "../../page/news-management/add";
 import ListNhatkiManagement from "../../page/nhatki";
@@ -97,4 +109,68 @@ export const privateRoutes = [
         component: AddThongTinCapNhatManagement,
         private: true,
     },
+
+    {
+        path: ROUTE_PATH.DANH_MUC_LOP_DU_LIEU_MANAGEMENT,
+        component: ListDanhMucLopDuLieuManagement,
+        private: true,
+    },
+    {
+        path: ROUTE_PATH.ADD_DANH_MUC_LOP_DU_LIEU_MANAGEMENT,
+        component: AddDanhMucLopDuLieuManagement,
+        private: true,
+    },
+    {
+        path: ROUTE_PATH.VIEW_DANH_MUC_LOP_DU_LIEU_MANAGEMENT,
+        component: SlugDanhMucLopDuLieuManagement,
+        private: true,
+    },
+
+    {
+        path: ROUTE_PATH.ANHVETINH_MANAGEMENT,
+        component: ListAnhVeTinhManagement,
+        private: true,
+    },
+    {
+        path: ROUTE_PATH.ADD_ANHVETINH_MANAGEMENT,
+        component: AddAnhVeTinhManagement,
+        private: true,
+    },
+    {
+        path: ROUTE_PATH.VIEW_ANHVETINH_MANAGEMENT,
+        component: SlugAnhVeTinhManagement,
+        private: true,
+    },
+
+    {
+        path: ROUTE_PATH.LOPBANDO_MANAGEMENT,
+        component: ListLopDuLieuBanDoManagement,
+        private: true,
+    },
+    {
+        path: ROUTE_PATH.ADD_LOPBANDO_MANAGEMENT,
+        component: AddLopDuLieuBanDoManagement,
+        private: true,
+    },
+    {
+        path: ROUTE_PATH.VIEW_LOPBANDO_MANAGEMENT,
+        component: SlugLopDuLieuBanDoManagement,
+        private: true,
+    },
+
+    {
+        path: ROUTE_PATH.API_MANAGEMENT,
+        component: ListAPIManagement,
+        private: true,
+    },
+    {
+        path: ROUTE_PATH.ADD_API_MANAGEMENT,
+        component: AddAPIManagement,
+        private: true,
+    },
+    {
+        path: ROUTE_PATH.VIEW_API_MANAGEMENT,
+        component: SlugAPIManagement,
+        private: true,
+    }
 ]
