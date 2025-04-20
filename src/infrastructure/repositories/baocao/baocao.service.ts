@@ -71,7 +71,7 @@ class BaoCaoService {
         setLoading(true)
         try {
             return await RequestService
-                .put(`${Endpoint.BaoCao.Update}/${id}`,
+                .postForm(`${Endpoint.BaoCao.Update}/${id}`,
                     data
                 )
                 .then(response => {

@@ -104,6 +104,10 @@ const ListUserManagement = () => {
     };
 
     // Xóa bài
+
+    const onNavigate = (id: any) => {
+        navigate(`${(ROUTE_PATH.VIEW_USER_MANAGEMENT).replace(`${Constants.UseParams.Id}`, "")}${id}`);
+    }
     return (
         <MainLayout
             title={'Danh sách người dùng'}
@@ -183,9 +187,8 @@ const ListUserManagement = () => {
                                 width={60}
                                 render={(action, record: any) => (
                                     <ActionCommon
-                                        onClickDetail={() => navigate(`${ROUTE_PATH.USER_MANAGEMENT}/${record.iduser}`)}
+                                        onClickDetail={() => onNavigate(record.iduser)}
                                         onClickDelete={() => onOpenModalDelete(record.iduser)}
-
                                     />
                                 )}
                             />

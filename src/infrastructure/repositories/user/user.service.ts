@@ -95,7 +95,7 @@ class UserService {
         setLoading(true)
         try {
             return await RequestService
-                .delete(`${Endpoint.User.Delete}/${id}`,)
+                .post(`${Endpoint.User.Delete}/${id}`,)
                 .then(response => {
                     if (response) {
                         SuccessMessage("Xóa thành công", "")

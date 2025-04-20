@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import '../../assets/styles/page/Management.css';
 import { Col, Row } from 'antd';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { ROUTE_PATH } from '../../core/common/appRouter';
 import MainLayout from '../../infrastructure/common/Layouts/Main-Layout';
 import ButtonCommon from '../../infrastructure/common/components/button/button-common';
@@ -12,13 +12,15 @@ import InputDateCommon from '../../infrastructure/common/components/input/input-
 import UploadSingleFile from '../../infrastructure/common/components/input/upload-single-file';
 import baoCaoService from '../../infrastructure/repositories/baocao/baocao.service';
 
-const AddBaoCaoManagement = () => {
+const ViewBaoCaoManagement = () => {
+    const [detail, setDetail] = useState<any>({});
     const [validate, setValidate] = useState<any>({});
     const [loading, setLoading] = useState<boolean>(false);
     const [submittedTime, setSubmittedTime] = useState<any>();
     const [_data, _setData] = useState<any>({});
     const dataRequest = _data;
     const navigate = useNavigate();
+    const param = useParams();
 
     const setDataRequest = (data: any) => {
         Object.assign(dataRequest, { ...data });
@@ -42,6 +44,36 @@ const AddBaoCaoManagement = () => {
         navigate(ROUTE_PATH.BAOCAO_MANAGEMENT)
     }
 
+    const onGetByIdAsync = async () => {
+        if (String(param.id)) {
+            try {
+                await baoCaoService.GetBaoCaoById(
+                    String(param.id),
+                    setLoading
+                ).then((res) => {
+                    setDetail(res.baocao)
+                })
+            }
+            catch (error) {
+                console.error(error)
+            }
+        }
+
+    }
+    useEffect(() => {
+        onGetByIdAsync().then(() => { })
+    }, [])
+
+
+    useEffect(() => {
+        if (detail) {
+            setDataRequest({
+                tenbaocao: detail.tenbaocao,
+                ngaytaobaocao: detail.ngaytaobaocao,
+                baocao: detail.baocao,
+            });
+        };
+    }, [detail]);
     const onCreateAsync = async () => {
         await setSubmittedTime(Date.now());
         const formData = new FormData();
@@ -49,7 +81,8 @@ const AddBaoCaoManagement = () => {
         formData.append('ngaytaobaocao', dataRequest.ngaytaobaocao)
         formData.append('baocao', dataRequest.baocao)
         if (isValidData()) {
-            await baoCaoService.CreateBaoCao(
+            await baoCaoService.UpdateBaoCao(
+                String(param.id),
                 formData,
                 onBack,
                 setLoading
@@ -59,10 +92,11 @@ const AddBaoCaoManagement = () => {
             alert("Nhập thiếu thông tin")
         };
     };
+    console.log("dataRequest", dataRequest);
 
     return (
         <MainLayout
-            title={'Thêm báo cáo'}
+            title={'Sửa báo cáo'}
             breadcrumb={'Báo cáo'}
             redirect={ROUTE_PATH.BAOCAO_MANAGEMENT}
         >
@@ -129,4 +163,4 @@ const AddBaoCaoManagement = () => {
         </MainLayout>
     )
 }
-export default AddBaoCaoManagement
+export default ViewBaoCaoManagement

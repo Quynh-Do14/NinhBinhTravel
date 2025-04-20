@@ -1,24 +1,26 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import '../../assets/styles/page/Management.css';
 import { Col, Row } from 'antd';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { ROUTE_PATH } from '../../core/common/appRouter';
 import MainLayout from '../../infrastructure/common/Layouts/Main-Layout';
 import ButtonCommon from '../../infrastructure/common/components/button/button-common';
 import InputTextCommon from '../../infrastructure/common/components/input/input-text';
 import { FullPageLoading } from '../../infrastructure/common/components/controls/loading';
 import { WarningMessage } from '../../infrastructure/common/components/toast/notificationToast';
-import InputDateCommon from '../../infrastructure/common/components/input/input-date';
-import UploadSingleFile from '../../infrastructure/common/components/input/upload-single-file';
-import baoCaoService from '../../infrastructure/repositories/baocao/baocao.service';
+import chuyenDeService from '../../infrastructure/repositories/chuyende/chuyende.service';
+import fileService from '../../infrastructure/repositories/file/file.service';
+import UploadSingleImage from '../../infrastructure/common/components/input/upload-img-single';
 
-const AddBaoCaoManagement = () => {
+const ViewChuyenDeManagement = () => {
+    const [detail, setDetail] = useState<any>({});
     const [validate, setValidate] = useState<any>({});
     const [loading, setLoading] = useState<boolean>(false);
     const [submittedTime, setSubmittedTime] = useState<any>();
     const [_data, _setData] = useState<any>({});
     const dataRequest = _data;
     const navigate = useNavigate();
+    const param = useParams();
 
     const setDataRequest = (data: any) => {
         Object.assign(dataRequest, { ...data });
@@ -39,21 +41,59 @@ const AddBaoCaoManagement = () => {
     };
 
     const onBack = () => {
-        navigate(ROUTE_PATH.BAOCAO_MANAGEMENT)
+        navigate(ROUTE_PATH.CHUYENDE_MANAGEMENT)
     }
+
+    const onGetByIdAsync = async () => {
+        if (String(param.id)) {
+            try {
+                await chuyenDeService.GetChuyenDeById(
+                    String(param.id),
+                    setLoading
+                ).then((res) => {
+                    setDetail(res.bandochuyende)
+                })
+            }
+            catch (error) {
+                console.error(error)
+            }
+        }
+
+    }
+    useEffect(() => {
+        onGetByIdAsync().then(() => { })
+    }, [])
+
+    useEffect(() => {
+        if (detail) {
+            setDataRequest({
+                ten: detail.ten,
+            });
+        };
+    }, [detail]);
 
     const onCreateAsync = async () => {
         await setSubmittedTime(Date.now());
         const formData = new FormData();
-        formData.append('tenbaocao', dataRequest.tenbaocao)
-        formData.append('ngaytaobaocao', dataRequest.ngaytaobaocao)
-        formData.append('baocao', dataRequest.baocao)
+        formData.append('img', dataRequest.filename)
         if (isValidData()) {
-            await baoCaoService.CreateBaoCao(
+            await fileService.UploadFle(
                 formData,
                 onBack,
                 setLoading
-            )
+            ).then((res) => {
+                chuyenDeService.UpdateChuyenDe(
+                    {
+                        id: String(param.id),
+                        ten: dataRequest.ten,
+                        filename: res.res
+                    },
+                    onBack,
+                    setLoading
+                )
+            })
+
+
         }
         else {
             alert("Nhập thiếu thông tin")
@@ -62,9 +102,9 @@ const AddBaoCaoManagement = () => {
 
     return (
         <MainLayout
-            title={'Thêm báo cáo'}
-            breadcrumb={'Báo cáo'}
-            redirect={ROUTE_PATH.BAOCAO_MANAGEMENT}
+            title={'Sửa Chuyên đề'}
+            breadcrumb={'Chuyên đề'}
+            redirect={ROUTE_PATH.CHUYENDE_MANAGEMENT}
         >
             <div className="management-container">
                 <div className="content">
@@ -83,14 +123,14 @@ const AddBaoCaoManagement = () => {
                     <div className="form-container">
                         <Row gutter={[30, 20]}>
                             <Col span={24} className="border-add">
-                                <div className="legend-title">Thêm thông tin mới</div>
+                                <div className="legend-title">Cập nhật thông tin</div>
                                 <Row gutter={[30, 20]}>
                                     <Col span={24}>
                                         <InputTextCommon
                                             label={"Tiêu đề"}
-                                            attribute={"tenbaocao"}
+                                            attribute={"ten"}
                                             isRequired={true}
-                                            dataAttribute={dataRequest.tenbaocao}
+                                            dataAttribute={dataRequest.ten}
                                             setData={setDataRequest}
                                             disabled={false}
                                             validate={validate}
@@ -99,24 +139,11 @@ const AddBaoCaoManagement = () => {
                                         />
                                     </Col>
                                     <Col span={24}>
-                                        <InputDateCommon
-                                            label={"Ngày tạo báo cáo"}
-                                            attribute={"ngaytaobaocao"}
-                                            isRequired={true}
-                                            dataAttribute={dataRequest.ngaytaobaocao}
+                                        <UploadSingleImage
+                                            dataAttribute={dataRequest.filename}
                                             setData={setDataRequest}
-                                            disabled={false}
-                                            validate={validate}
-                                            setValidate={setValidate}
-                                            submittedTime={submittedTime}
-                                            disabledToDate={false} />
-                                    </Col>
-                                    <Col span={24}>
-                                        <UploadSingleFile
-                                            dataAttribute={dataRequest.baocao}
-                                            setData={setDataRequest}
-                                            attribute={'baocao'}
-                                            label={'File báo cáo pdf'}
+                                            attribute={'filename'}
+                                            label={'Ảnh'}
                                         />
                                     </Col>
                                 </Row>
@@ -129,4 +156,4 @@ const AddBaoCaoManagement = () => {
         </MainLayout>
     )
 }
-export default AddBaoCaoManagement
+export default ViewChuyenDeManagement

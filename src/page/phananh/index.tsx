@@ -184,7 +184,7 @@ const ListPhananhManagement = () => {
                                 key={"ngaytaophananh"}
                                 dataIndex={"ngaytaophananh"}
                             />
-                            <Column
+                            {/* <Column
                                 title="Thao tác"
                                 fixed="right"
                                 align='center'
@@ -196,7 +196,7 @@ const ListPhananhManagement = () => {
 
                                     />
                                 )}
-                            />
+                            /> */}
                         </Table>
                     </div>
                     <div className='flex flex-col'>

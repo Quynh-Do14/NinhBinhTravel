@@ -184,7 +184,7 @@ const ListLopDuLieuBanDoManagement = () => {
                                 key={"iddanhmuclopbandonoi"}
                                 dataIndex={"iddanhmuclopbandonoi"}
                             />
-                            <Column
+                            {/* <Column
                                 title={
                                     <TitleTableCommon
                                         title="URI SHP"
@@ -203,7 +203,7 @@ const ListLopDuLieuBanDoManagement = () => {
                                 }
                                 key={"uridbf"}
                                 dataIndex={"uridbf"}
-                            />
+                            /> */}
                             <Column
                                 title={
                                     <TitleTableCommon

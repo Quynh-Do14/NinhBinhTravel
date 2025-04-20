@@ -67,11 +67,11 @@ class ChuyenDeService {
     }
 
 
-    async UpdateChuyenDe(id: string, data: object, onBack: Function, setLoading: Function) {
+    async UpdateChuyenDe(data: object, onBack: Function, setLoading: Function) {
         setLoading(true)
         try {
             return await RequestService
-                .put(`${Endpoint.ChuyenDe.Update}/${id}`,
+                .post(`${Endpoint.ChuyenDe.Update}`,
                     data
                 )
                 .then(response => {
@@ -95,7 +95,11 @@ class ChuyenDeService {
         setLoading(true)
         try {
             return await RequestService
-                .post(`${Endpoint.ChuyenDe.Delete}/${id}`,)
+                .post(`${Endpoint.ChuyenDe.Delete}`,
+                    {
+                        id: id
+                    }
+                )
                 .then(response => {
                     if (response) {
                         SuccessMessage("Xóa thành công", "")

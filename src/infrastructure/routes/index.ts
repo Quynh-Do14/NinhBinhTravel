@@ -8,24 +8,29 @@ import SlugAPIManagement from "../../page/apibando/view";
 import LoginPage from "../../page/Auth/Login";
 import ListBanDoManagement from "../../page/bandochuyende";
 import AddChuyenDeManagement from "../../page/bandochuyende/add";
+import ViewChuyenDeManagement from "../../page/bandochuyende/view";
 import ListBaoCaoManagement from "../../page/baocao";
 import AddBaoCaoManagement from "../../page/baocao/add";
+import ViewBaoCaoManagement from "../../page/baocao/view";
 import ListDanhMucLopDuLieuManagement from "../../page/danhmuclopdulieu";
 import AddDanhMucLopDuLieuManagement from "../../page/danhmuclopdulieu/add";
 import SlugDanhMucLopDuLieuManagement from "../../page/danhmuclopdulieu/view";
 import ListDiemQuanTracManagement from "../../page/diemquantrac";
 import AddDiemQuanTracManagement from "../../page/diemquantrac/add";
+import ViewDiemQuanTracManagement from "../../page/diemquantrac/view";
 import ListLopDuLieuBanDoManagement from "../../page/lopdulieubando";
 import AddLopDuLieuBanDoManagement from "../../page/lopdulieubando/add";
 import SlugLopDuLieuBanDoManagement from "../../page/lopdulieubando/view";
 import ListNewsManagement from "../../page/news-management";
 import AddNewsManagement from "../../page/news-management/add";
+import SlugNewsManagement from "../../page/news-management/view";
 import ListNhatkiManagement from "../../page/nhatki";
 import ListPhananhManagement from "../../page/phananh";
 import ListThongTinCapNhatManagement from "../../page/thongtincapnhat";
 import AddThongTinCapNhatManagement from "../../page/thongtincapnhat/add";
 import ListUserManagement from "../../page/user-management";
 import AddUserManagement from "../../page/user-management/add";
+import ViewUserManagement from "../../page/user-management/view";
 import MainLayout from "../common/Layouts/Main-Layout";
 
 export const privateRoutes = [
@@ -50,6 +55,11 @@ export const privateRoutes = [
         private: true,
     },
     {
+        path: ROUTE_PATH.VIEW_USER_MANAGEMENT,
+        component: ViewUserManagement,
+        private: true,
+    },
+    {
         path: ROUTE_PATH.BLOG_MANAGEMENT,
         component: ListNewsManagement,
         private: true,
@@ -57,6 +67,11 @@ export const privateRoutes = [
     {
         path: ROUTE_PATH.ADD_BLOG_MANAGEMENT,
         component: AddNewsManagement,
+        private: true,
+    },
+    {
+        path: ROUTE_PATH.VIEW_BLOG_MANAGEMENT,
+        component: SlugNewsManagement,
         private: true,
     },
     {
@@ -70,6 +85,11 @@ export const privateRoutes = [
         private: true,
     },
     {
+        path: ROUTE_PATH.VIEW_CHUYENDE_MANAGEMENT,
+        component: ViewChuyenDeManagement,
+        private: true,
+    },
+    {
         path: ROUTE_PATH.DIEMQUANTRAC_MANAGEMENT,
         component: ListDiemQuanTracManagement,
         private: true,
@@ -77,6 +97,11 @@ export const privateRoutes = [
     {
         path: ROUTE_PATH.ADD_DIEMQUANTRAC_MANAGEMENT,
         component: AddDiemQuanTracManagement,
+        private: true,
+    },
+    {
+        path: ROUTE_PATH.VIEW_DIEMQUANTRAC_MANAGEMENT,
+        component: ViewDiemQuanTracManagement,
         private: true,
     },
     {
@@ -94,6 +119,12 @@ export const privateRoutes = [
         component: AddBaoCaoManagement,
         private: true,
     },
+    {
+        path: ROUTE_PATH.VIEW_BAOCAO_MANAGEMENT,
+        component: ViewBaoCaoManagement,
+        private: true,
+    },
+
     {
         path: ROUTE_PATH.NHATKI_MANAGEMENT,
         component: ListNhatkiManagement,

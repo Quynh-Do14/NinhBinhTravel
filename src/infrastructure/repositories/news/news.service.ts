@@ -71,7 +71,7 @@ class NewsService {
         setLoading(true)
         try {
             return await RequestService
-                .put(`${Endpoint.News.Update}/${id}`,
+                .post(`${Endpoint.News.Update}/${id}`,
                     data
                 )
                 .then(response => {

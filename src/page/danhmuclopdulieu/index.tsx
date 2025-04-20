@@ -104,13 +104,10 @@ const ListDanhMucLopDuLieuManagement = () => {
             console.error(error)
         }
     };
-
+    // Xóa bài
     const onNavigate = (id: any) => {
         navigate(`${(ROUTE_PATH.VIEW_DANH_MUC_LOP_DU_LIEU_MANAGEMENT).replace(`${Constants.UseParams.Id}`, "")}${id}`);
     }
-
-
-    // Xóa bài
     return (
         <MainLayout
             title={'Danh sách danh mục'}

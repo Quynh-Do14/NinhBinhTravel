@@ -7,15 +7,15 @@ import MainLayout from '../../infrastructure/common/Layouts/Main-Layout';
 import ButtonCommon from '../../infrastructure/common/components/button/button-common';
 import InputTextCommon from '../../infrastructure/common/components/input/input-text';
 import { FullPageLoading } from '../../infrastructure/common/components/controls/loading';
-import userService from '../../infrastructure/repositories/user/user.service';
 import { WarningMessage } from '../../infrastructure/common/components/toast/notificationToast';
-import InputPasswordCommon from '../../infrastructure/common/components/input/input-password';
-import newsService from '../../infrastructure/repositories/news/news.service';
-import InputTextAreaCommon from '../../infrastructure/common/components/input/text-area-common';
 import UploadAvatar from '../../infrastructure/common/components/input/upload-avatar';
+import InputTextAreaCommon from '../../infrastructure/common/components/input/text-area-common';
 import InputDateCommon from '../../infrastructure/common/components/input/input-date';
+import chuyenDeService from '../../infrastructure/repositories/chuyende/chuyende.service';
+import UploadListImage from '../../infrastructure/common/components/input/upload-list-image';
+import diemQuanTracService from '../../infrastructure/repositories/diemquantrac/diemquantrac.service';
 
-const SlugNewsManagement = () => {
+const ViewDiemQuanTracManagement = () => {
     const [detail, setDetail] = useState<any>({});
     const [validate, setValidate] = useState<any>({});
     const [loading, setLoading] = useState<boolean>(false);
@@ -24,6 +24,7 @@ const SlugNewsManagement = () => {
     const dataRequest = _data;
     const navigate = useNavigate();
     const param = useParams();
+
     const setDataRequest = (data: any) => {
         Object.assign(dataRequest, { ...data });
         _setData({ ...dataRequest });
@@ -43,17 +44,17 @@ const SlugNewsManagement = () => {
     };
 
     const onBack = () => {
-        navigate(ROUTE_PATH.BLOG_MANAGEMENT)
+        navigate(ROUTE_PATH.DIEMQUANTRAC_MANAGEMENT)
     }
 
     const onGetByIdAsync = async () => {
         if (String(param.id)) {
             try {
-                await newsService.GetNewsById(
+                await diemQuanTracService.GetDiemQuanTracById(
                     String(param.id),
                     setLoading
                 ).then((res) => {
-                    setDetail(res.tinTuc)
+                    setDetail(res.baocao)
                 })
             }
             catch (error) {
@@ -69,29 +70,26 @@ const SlugNewsManagement = () => {
     useEffect(() => {
         if (detail) {
             setDataRequest({
-                tieude: detail.tieude,
-                tieudecon: detail.tieudecon,
-                motangan: detail.motangan,
-                chitiet: detail.chitiet,
-                ngaytaotintuc: detail.ngaytaotintuc,
-                anhdaidien: detail.anhdaidien,
-
+                name: detail.name,
+                pl: detail.pl,
+                long: detail.long,
+                lat: detail.lat,
+                popupinfo: detail.popupinfo,
             });
         };
     }, [detail]);
 
-    const onUpdateAsync = async () => {
+    const onCreateAsync = async () => {
         await setSubmittedTime(Date.now());
         if (isValidData()) {
-            await newsService.UpdateNews(
+            await diemQuanTracService.UpdateDiemQuanTrac(
                 String(param.id),
                 {
-                    tieude: dataRequest.tieude,
-                    tieudecon: dataRequest.tieudecon,
-                    motangan: dataRequest.motangan,
-                    chitiet: dataRequest.chitiet,
-                    ngaytaotintuc: dataRequest.ngaytaotintuc,
-                    anhdaidien: dataRequest.anhdaidien,
+                    name: dataRequest.name,
+                    pl: dataRequest.pl,
+                    long: dataRequest.long,
+                    lat: dataRequest.lat,
+                    popupinfo: dataRequest.popupinfo,
 
                 },
                 onBack,
@@ -105,9 +103,9 @@ const SlugNewsManagement = () => {
 
     return (
         <MainLayout
-            title={'Chi tiết tin tức'}
-            breadcrumb={'Tin tức'}
-            redirect={ROUTE_PATH.BLOG_MANAGEMENT}
+            title={'Thêm điểm quan trắc'}
+            breadcrumb={'Điểm quan trắc'}
+            redirect={ROUTE_PATH.DIEMQUANTRAC_MANAGEMENT}
         >
             <div className="management-container">
                 <div className="content">
@@ -119,35 +117,21 @@ const SlugNewsManagement = () => {
                         />
                         <ButtonCommon
                             classColor={'red'}
-                            onClick={onUpdateAsync}
-                            title={'Cập nhật'}
+                            onClick={onCreateAsync}
+                            title={'Thêm mới'}
                         />
                     </div>
                     <div className="form-container">
                         <Row gutter={[30, 20]}>
-                            {/* <Col xs={24} sm={24} md={10} lg={8} xl={6} xxl={5} className={`border-add flex justify-center`}>
-                                <div className='flex flex-col gap-4'>
-                                    <div>
-                                        <div className="legend-title">Thêm ảnh mới</div>
-                                        <UploadAvatar
-                                            dataAttribute={dataRequest.imageAvatar}
-                                            setData={setDataRequest}
-                                            attribute={'imageAvatar'}
-                                            label={'Ảnh'}
-                                            listType={'picture-card'}
-                                            shape={'card'} />
-                                    </div>
-                                </div>
-                            </Col> */}
                             <Col span={24} className="border-add">
                                 <div className="legend-title">Thêm thông tin mới</div>
                                 <Row gutter={[30, 20]}>
-                                    <Col span={24}>
+                                    <Col xs={24} sm={24} md={24} lg={12} xl={12}>
                                         <InputTextCommon
-                                            label={"Tiêu đề"}
-                                            attribute={"tieude"}
+                                            label={"Tên"}
+                                            attribute={"name"}
                                             isRequired={true}
-                                            dataAttribute={dataRequest.tieude}
+                                            dataAttribute={dataRequest.name}
                                             setData={setDataRequest}
                                             disabled={false}
                                             validate={validate}
@@ -155,12 +139,38 @@ const SlugNewsManagement = () => {
                                             submittedTime={submittedTime}
                                         />
                                     </Col>
-                                    <Col span={24}>
+                                    <Col xs={24} sm={24} md={24} lg={12} xl={12}>
                                         <InputTextCommon
-                                            label={"Tiêu đề phụ"}
-                                            attribute={"tieudecon"}
+                                            label={"Phân loại"}
+                                            attribute={"pl"}
                                             isRequired={true}
-                                            dataAttribute={dataRequest.tieudecon}
+                                            dataAttribute={dataRequest.pl}
+                                            setData={setDataRequest}
+                                            disabled={false}
+                                            validate={validate}
+                                            setValidate={setValidate}
+                                            submittedTime={submittedTime}
+                                        />
+                                    </Col>
+                                    <Col xs={24} sm={24} md={24} lg={12} xl={12}>
+                                        <InputTextCommon
+                                            label={"Kinh độ"}
+                                            attribute={"long"}
+                                            isRequired={true}
+                                            dataAttribute={dataRequest.long}
+                                            setData={setDataRequest}
+                                            disabled={false}
+                                            validate={validate}
+                                            setValidate={setValidate}
+                                            submittedTime={submittedTime}
+                                        />
+                                    </Col>
+                                    <Col xs={24} sm={24} md={24} lg={12} xl={12}>
+                                        <InputTextCommon
+                                            label={"Vĩ độ"}
+                                            attribute={"lat"}
+                                            isRequired={true}
+                                            dataAttribute={dataRequest.lat}
                                             setData={setDataRequest}
                                             disabled={false}
                                             validate={validate}
@@ -170,50 +180,10 @@ const SlugNewsManagement = () => {
                                     </Col>
                                     <Col span={24}>
                                         <InputTextAreaCommon
-                                            label={"Mô tả ngắn"}
-                                            attribute={"motangan"}
+                                            label={"Nội dung"}
+                                            attribute={"popupinfo"}
                                             isRequired={true}
-                                            dataAttribute={dataRequest.motangan}
-                                            setData={setDataRequest}
-                                            disabled={false}
-                                            validate={validate}
-                                            setValidate={setValidate}
-                                            submittedTime={submittedTime}
-                                        />
-                                    </Col>
-                                    <Col span={24}>
-                                        <InputTextAreaCommon
-                                            label={"Chi tiết"}
-                                            attribute={"chitiet"}
-                                            isRequired={true}
-                                            dataAttribute={dataRequest.chitiet}
-                                            setData={setDataRequest}
-                                            disabled={false}
-                                            validate={validate}
-                                            setValidate={setValidate}
-                                            submittedTime={submittedTime}
-                                        />
-                                    </Col>
-                                    <Col span={24}>
-                                        <InputDateCommon
-                                            label={"Ngày tạo"}
-                                            attribute={"ngaytaotintuc"}
-                                            isRequired={true}
-                                            setData={setDataRequest}
-                                            dataAttribute={dataRequest.ngaytaotintuc}
-                                            disabled={false}
-                                            validate={validate}
-                                            setValidate={setValidate}
-                                            submittedTime={submittedTime}
-                                            disabledToDate={false}
-                                        />
-                                    </Col>
-                                    <Col span={24}>
-                                        <InputTextCommon
-                                            label={"Ảnh đại diện"}
-                                            attribute={"anhdaidien"}
-                                            isRequired={true}
-                                            dataAttribute={dataRequest.anhdaidien}
+                                            dataAttribute={dataRequest.popupinfo}
                                             setData={setDataRequest}
                                             disabled={false}
                                             validate={validate}
@@ -223,26 +193,12 @@ const SlugNewsManagement = () => {
                                     </Col>
                                 </Row>
                             </Col>
-                            {/* <Col span={24}>
-                                <TextEditorCommon
-                                    label={"Nội dung"}
-                                    attribute={"content"}
-                                    isRequired={true}
-                                    dataAttribute={dataRequest.content}
-                                    setData={setDataRequest}
-                                    disabled={false}
-                                    validate={validate}
-                                    setValidate={setValidate}
-                                    submittedTime={submittedTime}
-                                />
-                            </Col> */}
                         </Row>
                     </div>
                 </div>
-            </div>
+            </div >
             <FullPageLoading isLoading={loading} />
-        </MainLayout>
+        </MainLayout >
     )
 }
-
-export default SlugNewsManagement
+export default ViewDiemQuanTracManagement

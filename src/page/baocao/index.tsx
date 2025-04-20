@@ -107,6 +107,12 @@ const ListBaoCaoManagement = () => {
     };
 
     // Xóa bài
+
+    const onNavigate = (id: any) => {
+        navigate(`${(ROUTE_PATH.VIEW_BAOCAO_MANAGEMENT).replace(`${Constants.UseParams.Id}`, "")}${id}`);
+    }
+
+
     return (
         <MainLayout
             title={'Danh sách văn bản, báo cáo'}
@@ -201,7 +207,7 @@ const ListBaoCaoManagement = () => {
                                 width={60}
                                 render={(action, record: any) => (
                                     <ActionCommon
-                                        onClickDetail={() => navigate(`${ROUTE_PATH.CHUYENDE_MANAGEMENT}/${record.idbaocao}`)}
+                                        onClickDetail={() => onNavigate(record.idbaocao)}
                                         onClickDelete={() => onOpenModalDelete(record.idbaocao)}
 
                                     />

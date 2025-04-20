@@ -15,6 +15,7 @@ const getBase64 = (img: any, callback: any) => {
     reader.addEventListener('load', () => callback(reader.result));
     reader.readAsDataURL(img);
 };
+
 function UploadSingleImage(props: Props) {
     const {
         label,
@@ -22,33 +23,22 @@ function UploadSingleImage(props: Props) {
         setData,
         attribute,
     } = props;
-    const [value, setValue] = useState<string>("")
+
+    const [value, setValue] = useState<string>("");
+    const [filename, setFilename] = useState<string>("");
     const inputRef = useRef(null);
 
     const handleChange = (event: any) => {
-        console.log("event", event);
+        const fullName = event.file.name;
+        const nameWithoutExtension = fullName.replace(/\.[^/.]+$/, ''); // loại bỏ đuôi
+
         getBase64(event.file, (url: any) => {
-            if (String(event.file.name).indexOf("shp") !== -1) {
-                setData({
-                    ["uriexcel"]: "",
-                    ["urishp"]: event.file.name || '',
-                    ["uridbf"]: String(event.file.name).replace(".shp", ".dbf") || '',
-                    ["loaifile"]: "shp"
-                });
-                setValue(url)
-            }
-            else if (String(event.file.name).indexOf("xlsx") !== -1) {
-                setData({
-                    ["uriexcel"]: event.file.name || '',
-                    ["urishp"]: "",
-                    ["uridbf"]: "",
-                    ["loaifile"]: "xlsx"
-                });
-                setValue(url)
-            }
-            else {
-                alert("Định dạng file không đúng")
-            }
+            setData({
+                [attribute]: event.file || '',
+                ["uriexcel"]: fullName
+            });
+            setValue(url);
+            setFilename(nameWithoutExtension); // cập nhật tên file
         });
     };
 
@@ -77,19 +67,15 @@ function UploadSingleImage(props: Props) {
                 onChange={handleChange}
                 id="upload"
             >
-                Chọn hình ảnh từ thiết bị
+                Chọn file từ thiết bị
             </Upload>
-            {
-                value ?
-                    <div className="main-image">
-                        <img
-                            src={value}
-                            alt={`Image`}
-                        />
-                    </div>
-                    :
-                    null
-            }
+
+            {/* Hiển thị tên file */}
+            {filename && (
+                <div style={{ marginTop: '8px', fontStyle: 'italic', color: '#333' }}>
+                    <strong>File đã chọn:</strong> {filename}
+                </div>
+            )}
         </div >
     )
 }

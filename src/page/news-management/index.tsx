@@ -12,7 +12,6 @@ import DialogConfirmCommon from '../../infrastructure/common/components/modal/di
 import InputSearch from '../../infrastructure/common/components/input/input-search';
 import { useNavigate } from 'react-router-dom';
 import { FullPageLoading } from '../../infrastructure/common/components/controls/loading';
-import userService from '../../infrastructure/repositories/user/user.service';
 import Constants from '../../core/common/constants';
 import newsService from '../../infrastructure/repositories/news/news.service';
 
@@ -105,6 +104,10 @@ const ListNewsManagement = () => {
     };
 
     // Xóa bài
+
+    const onNavigate = (id: any) => {
+        navigate(`${(ROUTE_PATH.VIEW_BLOG_MANAGEMENT).replace(`${Constants.UseParams.Id}`, "")}${id}`);
+    }
     return (
         <MainLayout
             title={'Danh sách tin tức'}
@@ -208,7 +211,7 @@ const ListNewsManagement = () => {
                                 width={60}
                                 render={(action, record: any) => (
                                     <ActionCommon
-                                        onClickDetail={() => navigate(`${ROUTE_PATH.BLOG_MANAGEMENT}/${record.idtintuc}`)}
+                                        onClickDetail={() => onNavigate(record.idtintuc)}
                                         onClickDelete={() => onOpenModalDelete(record.idtintuc)}
 
                                     />

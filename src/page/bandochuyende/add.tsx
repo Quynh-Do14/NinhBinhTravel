@@ -71,8 +71,8 @@ const AddChuyenDeManagement = () => {
 
     return (
         <MainLayout
-            title={'Thêm người dùng'}
-            breadcrumb={'Nguời dùng'}
+        title={'Thêm Chuyên đề'}
+        breadcrumb={'Chuyên đề'}
             redirect={ROUTE_PATH.CHUYENDE_MANAGEMENT}
         >
             <div className="management-container">

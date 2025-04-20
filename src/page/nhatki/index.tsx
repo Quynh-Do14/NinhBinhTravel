@@ -180,7 +180,7 @@ const ListNhatkiManagement = () => {
                                 dataIndex={"firstname"}
                             />
 
-                            <Column
+                            {/* <Column
                                 title="Thao tác"
                                 fixed="right"
                                 align='center'
@@ -192,7 +192,7 @@ const ListNhatkiManagement = () => {
 
                                     />
                                 )}
-                            />
+                            /> */}
                         </Table>
                     </div>
                     <div className='flex flex-col'>

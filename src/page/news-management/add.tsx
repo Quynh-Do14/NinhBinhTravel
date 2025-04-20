@@ -42,7 +42,7 @@ const AddNewsManagement = () => {
     };
 
     const onBack = () => {
-        navigate(ROUTE_PATH.USER_MANAGEMENT)
+        navigate(ROUTE_PATH.BLOG_MANAGEMENT)
     }
 
     const onCreateAsync = async () => {
@@ -68,9 +68,9 @@ const AddNewsManagement = () => {
 
     return (
         <MainLayout
-            title={'Thêm người dùng'}
-            breadcrumb={'Nguời dùng'}
-            redirect={ROUTE_PATH.USER_MANAGEMENT}
+            title={'Thêm Tin tức'}
+            breadcrumb={'Tin tức'}
+            redirect={ROUTE_PATH.BLOG_MANAGEMENT}
         >
             <div className="management-container">
                 <div className="content">
@@ -88,7 +88,7 @@ const AddNewsManagement = () => {
                     </div>
                     <div className="form-container">
                         <Row gutter={[30, 20]}>
-                            <Col xs={24} sm={24} md={10} lg={8} xl={6} xxl={5} className={`border-add flex justify-center`}>
+                            {/* <Col xs={24} sm={24} md={10} lg={8} xl={6} xxl={5} className={`border-add flex justify-center`}>
                                 <div className='flex flex-col gap-4'>
                                     <div>
                                         <div className="legend-title">Thêm ảnh mới</div>
@@ -101,8 +101,8 @@ const AddNewsManagement = () => {
                                             shape={'card'} />
                                     </div>
                                 </div>
-                            </Col>
-                            <Col xs={24} sm={24} md={14} lg={16} xl={18} xxl={19} className="border-add">
+                            </Col> */}
+                            <Col span={24} className="border-add">
                                 <div className="legend-title">Thêm thông tin mới</div>
                                 <Row gutter={[30, 20]}>
                                     <Col span={24}>

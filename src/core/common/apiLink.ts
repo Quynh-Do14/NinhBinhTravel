@@ -6,10 +6,10 @@ export class Endpoint {
     }
     static User = class {
         static Get = "/user"
-        static GetById = "/auth/get"
+        static GetById = "/user"
         static Create = "/user"
-        static Update = "/auth/admin/update-account"
-        static Delete = "/auth/admin/delete"
+        static Update = "/user"
+        static Delete = "/user/delete"
     }
     static News = class {
         static Get = "/tintuc"
@@ -22,7 +22,7 @@ export class Endpoint {
         static Get = "/bandochuyende"
         static GetById = "/bandochuyende"
         static Create = "/bandochuyende"
-        static Update = "/bandochuyende/upanhbandochuyende"
+        static Update = "/bandochuyende/update"
         static Delete = "/bandochuyende/delete"
     }
     static DiemQuanTrac = class {
@@ -80,6 +80,9 @@ export class Endpoint {
         static Create = "/dulieulopbando"
         static Update = "/dulieulopbando"
         static Delete = "/dulieulopbando"
+        static Upload = "/dulieulopbando/upload"
+        static DealeteDB = "/dulieulopbando/xoadb"
+
     }
     static DanhMucAPI = class {
         static Get = "/api"

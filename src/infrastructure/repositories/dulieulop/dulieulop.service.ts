@@ -111,6 +111,49 @@ class DulieulopService {
             setLoading(false);
         }
     }
+
+    async UploadDulieulop(data: any, setLoading: Function) {
+        setLoading(true)
+        try {
+            return await RequestService
+                .postForm(Endpoint.Dulieulop.Upload,
+                    data
+                )
+                .then(response => {
+                    if (response) {
+                        SuccessMessage("Cập nhật thành công", "")
+                        return response
+                    }
+                    setLoading(false)
+                    return response;
+                });
+        } catch (error) {
+            FailMessage("Thêm dữ liệu mới không thành công", "Vui lòng kiểm tra thông tin")
+            console.error(error)
+        } finally {
+            setLoading(false);
+        }
+    }
+    async DeleteDBDulieulop(data: any, setLoading: Function) {
+        setLoading(true)
+        try {
+            return await RequestService
+                .post(Endpoint.Dulieulop.DealeteDB,
+                    data
+                )
+                .then(response => {
+                    if (response) {
+                        return response
+                    }
+                    setLoading(false)
+                    return response;
+                });
+        } catch (error) {
+            console.error(error)
+        } finally {
+            setLoading(false);
+        }
+    }
 }
 
 const dulieulopService = new DulieulopService();

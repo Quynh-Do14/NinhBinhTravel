@@ -107,6 +107,10 @@ const ListBanDoManagement = () => {
     };
 
     // Xóa bài
+    const onNavigate = (id: any) => {
+        navigate(`${(ROUTE_PATH.VIEW_CHUYENDE_MANAGEMENT).replace(`${Constants.UseParams.Id}`, "")}${id}`);
+    }
+
     return (
         <MainLayout
             title={'Danh sách Bản đồ chuyên đề'}
@@ -181,9 +185,8 @@ const ListBanDoManagement = () => {
                                 width={60}
                                 render={(action, record: any) => (
                                     <ActionCommon
-                                        onClickDetail={() => navigate(`${ROUTE_PATH.CHUYENDE_MANAGEMENT}/${record.id}`)}
+                                        onClickDetail={() => onNavigate(record.id)}
                                         onClickDelete={() => onOpenModalDelete(record.id)}
-
                                     />
                                 )}
                             />

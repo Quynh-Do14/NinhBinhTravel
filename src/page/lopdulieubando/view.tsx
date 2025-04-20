@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import '../../assets/styles/page/Management.css';
 import { Col, Row } from 'antd';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -7,15 +7,7 @@ import MainLayout from '../../infrastructure/common/Layouts/Main-Layout';
 import ButtonCommon from '../../infrastructure/common/components/button/button-common';
 import InputTextCommon from '../../infrastructure/common/components/input/input-text';
 import { FullPageLoading } from '../../infrastructure/common/components/controls/loading';
-import userService from '../../infrastructure/repositories/user/user.service';
-import { WarningMessage } from '../../infrastructure/common/components/toast/notificationToast';
-import InputPasswordCommon from '../../infrastructure/common/components/input/input-password';
-import newsService from '../../infrastructure/repositories/news/news.service';
-import InputTextAreaCommon from '../../infrastructure/common/components/input/text-area-common';
-import UploadAvatar from '../../infrastructure/common/components/input/upload-avatar';
 import danhmucService from '../../infrastructure/repositories/danhmuc/danhmuc.service';
-import InputDateCommon from '../../infrastructure/common/components/input/input-date';
-import anhvetinhService from '../../infrastructure/repositories/anhvetinh/danhmuc.service';
 import InputSelectCatrgoryAPI from '../../infrastructure/common/components/input/select-category';
 import InputSelectCatrgoryCommon from '../../infrastructure/common/components/input/select-category-common';
 import UploadSingleImage from '../../infrastructure/common/components/input/upload-img-single';
@@ -96,13 +88,13 @@ const SlugLopDuLieuBanDoManagement = () => {
         if (detail) {
             setDataRequest({
                 tendulieu: detail.tendulieu,
-                urishp: detail.urishp || "",
+                // urishp: detail.urishp || "",
                 iddanhmuclopbandonoi: detail.iddanhmuclopbandonoi,
                 uriexcel: detail.uriexcel || "",
-                uridbf: detail.uridbf || "",
-                loaifile: detail.loaifile || "",
+                // uridbf: detail.uridbf || "",
+                // loaifile: detail.loaifile || "",
                 hienthimacdinh: 1,
-                loaidulieu: detail.loaidulieu
+                loaidulieu: "Điểm"
             });
         };
     }, [detail]);
@@ -114,17 +106,30 @@ const SlugLopDuLieuBanDoManagement = () => {
                 String(param.id),
                 {
                     tendulieu: dataRequest.tendulieu,
-                    urishp: dataRequest.urishp || "",
+                    // urishp: dataRequest.urishp || "",
                     iddanhmuclopbandonoi: dataRequest.iddanhmuclopbandonoi,
                     uriexcel: dataRequest.uriexcel || "",
-                    uridbf: dataRequest.uridbf || "",
-                    loaifile: dataRequest.loaifile || "",
+                    // uridbf: dataRequest.uridbf || "",
+                    // loaifile: dataRequest.loaifile || "",
                     hienthimacdinh: 1,
-                    loaidulieu: dataRequest.loaidulieu
+                    loaidulieu: "Điểm"
                 },
                 onBack,
                 setLoading
             )
+            await dulieulopService.DeleteDBDulieulop(
+                {
+                    tenbang: detail.uriexcel.split('.').slice(0, -1).join('.') || "",
+                },
+                setLoading
+            ).then(async () => {
+                await dulieulopService.UploadDulieulop(
+                    {
+                        file: dataRequest.file || "",
+                    },
+                    setLoading
+                )
+            })
         }
         else {
             alert("Nhập thiếu thông tin")
@@ -204,7 +209,7 @@ const SlugLopDuLieuBanDoManagement = () => {
                                             submittedTime={submittedTime}
                                             listDataOfItem={listDanhMuc} />
                                     </Col>
-                                    <Col span={24}>
+                                    {/* <Col span={24}>
                                         <InputSelectCatrgoryCommon
                                             label={"Loại dữ liệu"}
                                             attribute={"loaidulieu"}
@@ -216,12 +221,12 @@ const SlugLopDuLieuBanDoManagement = () => {
                                             setValidate={setValidate}
                                             submittedTime={submittedTime}
                                             listDataOfItem={listDataOfItem} />
-                                    </Col>
+                                    </Col> */}
                                     <Col span={24}>
                                         <UploadSingleImage
                                             label={"Chọn file"}
-                                            attribute={""}
-                                            dataAttribute={dataRequest.f}
+                                            attribute={"file"}
+                                            dataAttribute={dataRequest.file}
                                             setData={setDataRequest}
                                         />
                                     </Col>

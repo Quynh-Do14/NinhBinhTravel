@@ -7,15 +7,16 @@ export const ROUTE_PATH = {
     ///Admin
     USER_MANAGEMENT: `${PREFIX}/user-management`,
     ADD_USER_MANAGEMENT: `${PREFIX}/user-management/add`,
+    VIEW_USER_MANAGEMENT: `${PREFIX}/user-management/view/:id`,
+
 
     BLOG_MANAGEMENT: `${PREFIX}/news-management`,
     ADD_BLOG_MANAGEMENT: `${PREFIX}/news-management/add`,
-
-    CARD_MANAGEMENT: `${PREFIX}/card-management`,
-    ADD_CARD_MANAGEMENT: `${PREFIX}/card-management/add`,
+    VIEW_BLOG_MANAGEMENT: `${PREFIX}/news-management/view/:id`,
 
     CATEGORY_MANAGEMENT: `${PREFIX}/category-management`,
     ADD_CATEGORY_MANAGEMENT: `${PREFIX}/category-management/add`,
+    VIEW_CATEGORY_MANAGEMENT: `${PREFIX}/category-management/view/:id`,
 
     CATEGORY_PRODUCT_MANAGEMENT: `${PREFIX}/category-product-management`,
     ADD_CATEGORY_PRODUCT_MANAGEMENT: `${PREFIX}/category-product-management/add`,
@@ -26,14 +27,18 @@ export const ROUTE_PATH = {
 
     CHUYENDE_MANAGEMENT: `${PREFIX}/bandochuyende-management`,
     ADD_CHUYENDE_MANAGEMENT: `${PREFIX}/bandochuyende-management/add`,
+    VIEW_CHUYENDE_MANAGEMENT: `${PREFIX}/bandochuyende-management/view/:id`,
+
 
     DIEMQUANTRAC_MANAGEMENT: `${PREFIX}/diemquantrac-management`,
     ADD_DIEMQUANTRAC_MANAGEMENT: `${PREFIX}/diemquantrac-management/add`,
+    VIEW_DIEMQUANTRAC_MANAGEMENT: `${PREFIX}/diemquantrac-management/view/:id`,
 
     PHANANH_MANAGEMENT: `${PREFIX}/phananh-management`,
 
     BAOCAO_MANAGEMENT: `${PREFIX}/baocao-management`,
     ADD_BAOCAO_MANAGEMENT: `${PREFIX}/baocao-management/add`,
+    VIEW_BAOCAO_MANAGEMENT: `${PREFIX}/baocao-management/view/:id`,
 
     NHATKI_MANAGEMENT: `${PREFIX}/nhatki-management`,
 

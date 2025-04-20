@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import '../../assets/styles/page/Management.css';
 import { Col, Row } from 'antd';
 import { useNavigate } from 'react-router-dom';
@@ -7,12 +7,8 @@ import MainLayout from '../../infrastructure/common/Layouts/Main-Layout';
 import ButtonCommon from '../../infrastructure/common/components/button/button-common';
 import InputTextCommon from '../../infrastructure/common/components/input/input-text';
 import { FullPageLoading } from '../../infrastructure/common/components/controls/loading';
-import { WarningMessage } from '../../infrastructure/common/components/toast/notificationToast';
-import InputDateCommon from '../../infrastructure/common/components/input/input-date';
-import anhvetinhService from '../../infrastructure/repositories/anhvetinh/danhmuc.service';
 import dulieulopService from '../../infrastructure/repositories/dulieulop/dulieulop.service';
 import UploadSingleImage from '../../infrastructure/common/components/input/upload-img-single';
-import InputSelectCatrgoryCommon from '../../infrastructure/common/components/input/select-category-common';
 import danhmucService from '../../infrastructure/repositories/danhmuc/danhmuc.service';
 import InputSelectCatrgoryAPI from '../../infrastructure/common/components/input/select-category';
 const listDataOfItem = [
@@ -68,15 +64,21 @@ const AddLopDuLieuBanDoManagement = () => {
             await dulieulopService.CreateDulieulop(
                 {
                     tendulieu: dataRequest.tendulieu,
-                    urishp: dataRequest.urishp || "",
+                    // urishp: dataRequest.urishp || "",
                     iddanhmuclopbandonoi: dataRequest.iddanhmuclopbandonoi,
                     uriexcel: dataRequest.uriexcel || "",
-                    uridbf: dataRequest.uridbf || "",
-                    loaifile: dataRequest.loaifile || "",
+                    // uridbf: dataRequest.uridbf || "",
+                    // loaifile: dataRequest.loaifile || "",
                     hienthimacdinh: 1,
-                    loaidulieu: dataRequest.loaidulieu
+                    loaidulieu: "Điểm"
                 },
                 onBack,
+                setLoading
+            )
+            await dulieulopService.UploadDulieulop(
+                {
+                    file: dataRequest.file || "",
+                },
                 setLoading
             )
         }
@@ -157,7 +159,7 @@ const AddLopDuLieuBanDoManagement = () => {
                                             submittedTime={submittedTime}
                                             listDataOfItem={listDanhMuc} />
                                     </Col>
-                                    <Col span={24}>
+                                    {/* <Col span={24}>
                                         <InputSelectCatrgoryCommon
                                             label={"Loại dữ liệu"}
                                             attribute={"loaidulieu"}
@@ -169,12 +171,12 @@ const AddLopDuLieuBanDoManagement = () => {
                                             setValidate={setValidate}
                                             submittedTime={submittedTime}
                                             listDataOfItem={listDataOfItem} />
-                                    </Col>
+                                    </Col> */}
                                     <Col span={24}>
                                         <UploadSingleImage
                                             label={"Chọn file"}
-                                            attribute={""}
-                                            dataAttribute={dataRequest.f}
+                                            attribute={"file"}
+                                            dataAttribute={dataRequest.file}
                                             setData={setDataRequest}
                                         />
                                     </Col>
