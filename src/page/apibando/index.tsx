@@ -36,7 +36,7 @@ const ListAPIManagement = () => {
 
     const onGetListAsync = async ({ name = "", size = pageSize, page = currentPage }) => {
         const param = {
-            page: page - 1,
+            page: page ,
             size: size,
             search: name,
         }

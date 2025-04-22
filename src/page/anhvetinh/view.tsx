@@ -152,7 +152,7 @@ const SlugAnhVeTinhManagement = () => {
                                     </Col>
                                     <Col span={24}>
                                         <InputDateCommon
-                                            label={"Ngày tạo"}
+                                            label={"Ngày thu thập"}
                                             attribute={"ngaytaoanhvetinh"}
                                             isRequired={true}
                                             dataAttribute={dataRequest.ngaytaoanhvetinh}

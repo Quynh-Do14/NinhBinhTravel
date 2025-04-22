@@ -17,6 +17,7 @@ import Constants from '../../core/common/constants';
 import newsService from '../../infrastructure/repositories/news/news.service';
 import anhvetinhService from '../../infrastructure/repositories/anhvetinh/danhmuc.service';
 import dulieulopService from '../../infrastructure/repositories/dulieulop/dulieulop.service';
+import dayjs from "dayjs";
 
 let timeout: any
 const ListLopDuLieuBanDoManagement = () => {
@@ -36,7 +37,7 @@ const ListLopDuLieuBanDoManagement = () => {
 
     const onGetListAsync = async ({ name = "", size = pageSize, page = currentPage }) => {
         const param = {
-            page: page - 1,
+            page: page ,
             size: size,
             search: name,
         }
@@ -182,7 +183,7 @@ const ListLopDuLieuBanDoManagement = () => {
                                     />
                                 }
                                 key={"iddanhmuclopbandonoi"}
-                                dataIndex={"iddanhmuclopbandonoi"}
+                                dataIndex={"tendanhmuclopbando"}
                             />
                             {/* <Column
                                 title={
@@ -207,12 +208,28 @@ const ListLopDuLieuBanDoManagement = () => {
                             <Column
                                 title={
                                     <TitleTableCommon
-                                        title="URI EXCEL"
-                                        width={'150px'}
+                                        title="Quyền hiển thị"
+                                        width={'50px'}
                                     />
                                 }
                                 key={"uriexcel"}
-                                dataIndex={"uriexcel"}
+                                dataIndex={"hienthimacdinh"}
+                            />
+                             
+                             <Column
+                                title={
+                                    <TitleTableCommon
+                                        title="Ngày thêm dữ liệu"
+                                        width={'150px'}
+                                    />
+                                }
+                                key={"ngaythemdulieu"}
+                                dataIndex={"ngaythemdulieu"}
+                                sorter={(a, b) =>
+                                    dayjs(a.ngaytaoanhvetinh, "DD-MM-YYYY").unix() -
+                                    dayjs(b.ngaytaoanhvetinh, "DD-MM-YYYY").unix()
+                                  }
+                                  defaultSortOrder="descend" // tùy chọn nếu muốn mặc định sắp xếp
                             />
                             <Column
                                 title="Thao tác"
